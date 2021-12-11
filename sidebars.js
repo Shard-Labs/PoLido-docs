@@ -29,14 +29,13 @@ module.exports = {
       type: 'category',
       label: 'Contracts',
       items: [
-        'contracts/lido',
+        'contracts/StMatic',
         'contracts/lido-oracle',
         'contracts/stable-swap-state-oracle',
         'contracts/steth-price-feed',
         'contracts/node-operators-registry',
         'contracts/withdrawals-manager-stub',
         'contracts/wsteth',
-        'contracts/deposit-security-module',
       ],
     },
     {

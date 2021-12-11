@@ -1,20 +1,20 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Lido Docs',
-  tagline: 'Documentation for the Lido staking protocol',
-  url: 'https://lidofinance.github.io',
+  title: 'PoLido Docs',
+  tagline: 'Documentation for the PoLido staking protocol',
+  url: 'https://polido.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon-32x32.png',
-  organizationName: 'lidofinance', // Usually your GitHub org/user name.
-  projectName: 'docs', // Usually your repo name.
+  organizationName: 'Shard-Labs', // Usually your GitHub org/user name.
+  projectName: 'PoLido-docs', // Usually your repo name.
   themeConfig: {
     prism: {
       additionalLanguages: ['solidity'],
     },
     navbar: {
-      title: 'Lido Docs',
+      title: 'PoLido Docs',
       logo: {
         alt: 'Lido Logo',
         src: 'img/logo.svg',

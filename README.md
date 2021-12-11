@@ -1,6 +1,6 @@
 # Lido Docs
 
-Lido documentation is built using [Docusaurus 2](https://docusaurus.io/). The resulting version of documentation hosted via Github Pages from branch `gh-pages` of this repository.
+PoLido documentation is built using [Docusaurus 2](https://docusaurus.io/). The resulting version of documentation hosted via Github Pages from branch `gh-pages` of this repository.
 
 ## Installation
 
