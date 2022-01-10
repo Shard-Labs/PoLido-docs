@@ -1,145 +1,214 @@
 # NodeOperatorsRegistry
 
-- [Source Code](https://github.com/lidofinance/lido-dao/blob/master/contracts/0.4.24/nos/NodeOperatorsRegistry.sol)
-- [Deployed Contract](https://etherscan.io/address/0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5)
+- [Source Code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/NodeOperatorRegistry.sol)
+- [Deployed Contract](https://goerli.etherscan.io/address/0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a)
 
-Node Operators act as validators on the Beacon chain for the benefit of the protocol. The DAO selects node operators and adds their addresses to the NodeOperatorsRegistry contract. Authorized operators have to generate a set of keys for the validation and also provide them with the smart contract. As Ether is received from users, it is distributed in chunks of 32 Ether between all active Node Operators. The contract contains a list of operators, their keys, and the logic for distributing rewards between them. The DAO can deactivate misbehaving operators.
+Node Operators act as validators on the Goerli chain for the benefit of the protocol. The DAO selects node operators and adds their addresses to the NodeOperatorRegistry contract. Authorized operators have to generate a set of keys for the validation and provide the public key used on heimdall to the smart contract. As Matic is received from users, it is distributed between all active operators. The contract contains a list of operators, their public keys, the logic for managing their state by the DAO, and the .
 
 ## View Methods
 
-### getRewardsDistribution()
-
-Returns the rewards distribution proportional to the effective stake for each node operator
-
-```sol
-function getRewardsDistribution(uint256 _totalRewardShares) returns (
-  address[] recipients,
-  uint256[] shares
-)
-```
-
-#### Parameters:
-
-| Name                 | Type      | Description                                 |
-| -------------------- | --------- | ------------------------------------------- |
-| `_totalRewardShares` | `uint256` | Total amount of reward shares to distribute |
-
-### getActiveNodeOperatorsCount()
-
-Returns number of active node operators
+### getNodeOperatorState()
+This function returns a list of node operators that are currently in ACTIVE, UNSTAKE, STOPPED CLAIMED or WAIT state. It's primarily used by the Lido contract to calculate the total delegated amount.
 
 ```sol
-function getActiveNodeOperatorsCount() returns (uint256)
+function getNodeOperatorState()
+        external
+        view
+        override
+        returns (address[] memory)
 ```
 
 ### getNodeOperator()
 
-Returns the n-th node operator
+Returns the node operator based on the owners address.
 
 ```sol
-function getNodeOperator(uint256 _id, bool _fullInfo) returns (
-    bool active,
-    string name,
-    address rewardAddress,
-    uint64 stakingLimit,
-    uint64 stoppedValidators,
-    uint64 totalSigningKeys,
-    uint64 usedSigningKeys
-)
+function getNodeOperator(address _owner)
+        external
+        view
+        returns (NodeOperator memory)
 ```
-
 #### Parameters:
 
 | Name        | Type      | Description                            |
 | ----------- | --------- | -------------------------------------- |
-| `_id`       | `uint256` | Node Operator id                       |
-| `_fullInfo` | `bool`    | If true, name will be returned as well |
+| `_owner`    | `address` | Address of the node operator owner     |
 
-### getTotalSigningKeyCount()
+### getNodeOperator()
 
-Returns total number of signing keys of the node operator
+Returns the node operator based on the operators id.
 
 ```sol
-function getTotalSigningKeyCount(uint256 _operator_id) returns (uint256)
+function getNodeOperator(uint256 _operatorId)
+        external
+        view
+        returns (NodeOperator memory)
+```
+#### Parameters:
+
+| Name         | Type      | Description                            |
+| -----------  | --------- | -------------------------------------- |
+| `_operatorId`| `uint256` | Id of the operator                     |
+
+
+### getNodeOperatorState()
+
+Returns the addresses of all operators that are currently in: ACTIVE, UNSTAKE, STOPPED, CLAIMED or WAIT state.
+
+```sol
+function getNodeOperatorState()
+        external
+        view
+        override
+        returns (address[] memory)
+```
+
+### getContracts()
+
+Returns the addresses of ValidatorFactory, StakeManager, PolygonERC20 and StMATIC contracts.
+
+```sol
+function getContracts()
+        external
+        view
+        override
+        returns (
+            address _validatorFactory,
+            address _stakeManager,
+            address _polygonERC20,
+            address _stMATIC
+        )
+```
+
+### getState()
+
+Returns the global state consisting of total number of node operators and number of operators that are: inactive, active, stoppe, unstaked, claimed, waiting and exited.
+
+```sol
+function getState()
+        external
+        view
+        override
+        returns (
+            uint256 _totalNodeOperator,
+            uint256 _totalInactiveNodeOperator,
+            uint256 _totalActiveNodeOperator,
+            uint256 _totalStoppedNodeOperator,
+            uint256 _totalUnstakedNodeOperator,
+            uint256 _totalClaimedNodeOperator,
+            uint256 _totalWaitNodeOperator,
+            uint256 _totalExitNodeOperator
+        )
+```
+
+### getOperatorIds()
+
+Returns an array consisting of the operator ids.
+
+```sol
+function getOperatorIds()
+        external
+        view
+        override
+        returns (uint256[] memory)
+    {
+        return operatorIds;
+    }
+```
+
+### getValidatorStake()
+
+Returns the total stake of the validator that corresponds to the given reward address. 
+
+```sol
+function getValidatorStake(address _rewardAddress)
+        external
+        view
+        override
+        returns (uint256)
 ```
 
 #### Parameters:
 
-| Name           | Type      | Description      |
-| -------------- | --------- | ---------------- |
-| `_operator_id` | `uint256` | Node Operator id |
+| Name            | Type      | Description                           |
+| --------------  | --------- | ----------------------------------    |
+| `_rewardAddress`| `address` | Reward address for a certain operator |
 
-### getUnusedSigningKeyCount()
 
-Returns number of usable signing keys of the node operator
+### getIfOperatorsWereSlashed()
+
+Returns the array of ids of all the operators that were slashed.
 
 ```sol
-function getUnusedSigningKeyCount(uint256 _operator_id) returns (uint256)
+function getIfOperatorsWereSlashed()
+        external
+        view
+        override
+        returns (bool[] memory)
+```
+
+### getOperatorInfos()
+Returns an OperatorInfo array of all the operators that are active
+
+```sol
+function getOperatorInfos(bool _rewardData)
+        external
+        view
+        override
+        returns (Operator.OperatorInfo[] memory)
+```
+#### Parameters:
+
+| Name            | Type      | Description                                                         |
+| --------------  | --------- | ----------------------------------                                  |
+| `_rewardData`   | `bool`    | If true, function will also calculate the rewards for each operator |
+
+### getOperator()
+Returns the operator id and the NodeOperator struct based on the given operator id.
+
+```sol
+ function getOperator(uint256 _operatorId)
+        private
+        view
+        returns (uint256, NodeOperator storage)
 ```
 
 #### Parameters:
 
-| Name           | Type      | Description      |
-| -------------- | --------- | ---------------- |
-| `_operator_id` | `uint256` | Node Operator id |
+| Name            | Type      | Description                                                         |
+| --------------  | --------- | ----------------------------------                                  |
+| `_operatorId`   | `uint256` | Id of the operator |
 
-### getSigningKey()
-
-Returns n-th signing key of the node operator
+### getOperatorId()
+Returns the operator struct based on the operator owner address
 
 ```sol
-function getSigningKey(uint256 _operator_id, uint256 _index) returns (
-  bytes key,
-  bytes depositSignature,
-  bool used
-)
+ function getOperatorId(address _user) 
+        private 
+        view 
+        returns (uint256)
 ```
 
 #### Parameters:
 
-| Name           | Type      | Description                        |
-| -------------- | --------- | ---------------------------------- |
-| `_operator_id` | `uint256` | Node Operator id                   |
-| `_index`       | `uint256` | Index of the key, starting with 0d |
-
-#### Returns:
-
-| Name               | Type    | Description                                           |
-| ------------------ | ------- | ----------------------------------------------------- |
-| `key`              | `bytes` | Key                                                   |
-| `depositSignature` | `bytes` | Signature needed for a `depositContract.deposit` call |
-| `used`             | `bool`  | Flag indication if the key was used in the staking    |
-
-### getNodeOperatorsCount()
-
-Returns total number of node operators
-
-```sol
-function getNodeOperatorsCount() returns (uint256)
-```
-
-### getKeysOpIndex()
-Returns a monotonically increasing counter that gets incremented when any of the following happens:
-1. a Node Operator's key(s) is added
-2. a Node Operator's key(s) is removed
-3. a Node Operator's approved keys limit is changed
-4. a Node Operator was activated/deactivated
-
-```sol
-function getKeysOpIndex() public view returns (uint256)
-```
+| Name            | Type      | Description                                                         |
+| --------------  | --------- | ----------------------------------                                  |
+| `_user`   | `address` | Address of the operator owner|
 
 ## Methods
 
-### addNodeOperator()
+### addOperator()
 
-Add node operator named `_name` with reward address `_rewardAddress` and staking limit = 0
+Add node operator named `_name` with reward address `_rewardAddress` and signer (heimdall) public key `_signerPubkey`
 
 ```sol
-function addNodeOperator(
-  string _name,
-  address _rewardAddress
-) returns (uint256 id)
+function addOperator(
+        string memory _name,
+        address _rewardAddress,
+        bytes memory _signerPubkey
+    )
+        external
+        override
 ```
 
 #### Parameters:
@@ -147,24 +216,17 @@ function addNodeOperator(
 | Name             | Type      | Description                                                       |
 | ---------------- | --------- | ----------------------------------------------------------------- |
 | `_name`          | `string`  | Human-readable name                                               |
-| `_rewardAddress` | `address` | Ethereum 1 address which receives stETH rewards for this operator |
+| `_rewardAddress` | `address` | Goerli address which receives stMATIC rewards for this operator   |
+| `_signerPubKey`  | `bytes`   | Public key used on heimdall that is 64 bytes long.                |
 
-#### Returns:
+### stopOperator()
 
-| Name | Type      | Description                        |
-| ---- | --------- | ---------------------------------- |
-| `id` | `uint256` | A unique key of the added operator |
-
-### setNodeOperatorActive()
-
-Activate or disable node operator with given id
-
-:::note
-Increases the keysOpIndex
-:::
+Disable the node operator with given id
 
 ```sol
-function setNodeOperatorActive(uint256 _id, bool _active)
+function stopOperator(uint256 _operatorId)
+        external
+        override
 ```
 
 #### Parameters:
@@ -172,22 +234,158 @@ function setNodeOperatorActive(uint256 _id, bool _active)
 | Name      | Type      | Description                       |
 | --------- | --------- | --------------------------------- |
 | `_id`     | `uint256` | Node Operator id                  |
-| `_active` | `bool`    | Activate or disable node operator |
 
-### setNodeOperatorName()
+### exitOperator()
 
-Change human-readable name of the node operator `_id` to `_name`
+Changes the state from WAIT to EXIT for the operator based on the given validator share address
 
 ```sol
-function setNodeOperatorName(uint256 _id, string _name)
+function exitOperator(address _validatorShare) external override
+```
+
+#### Parameters:
+
+| Name      | Type      | Description                       |
+| --------- | --------- | --------------------------------- |
+| `_validatorShare`     | `address` | Address of the validator share             |
+
+### removeOperator()
+
+Removes the node operator with given id
+
+```sol
+function removeOperator(uint256 _operatorId)
+        external
+        override
+```
+
+#### Parameters:
+
+| Name      | Type      | Description                       |
+| --------- | --------- | --------------------------------- |
+| `_id`     | `uint256` | Node Operator id                  |
+
+### joinOperator()
+
+Adds a validator that was already staked on the polygon stake manager to the PoLido protocol.
+
+```sol
+function joinOperator() external override
+```
+
+### stake()
+
+Stakes a validator on the Polygon stakeManager contract.
+
+```sol
+function stake(uint256 _amount, uint256 _heimdallFee)
 ```
 
 #### Parameters:
 
 | Name    | Type      | Description         |
 | ------- | --------- | ------------------- |
-| `_id`   | `uint256` | Node Operator id    |
-| `_name` | `string`  | Human-readable name |
+| `_amount`   | `uint256` | Amount to stake   |
+| `_heimdallFee` | `uint256`  | Heimdall fee |
+
+### restake()
+
+Restakes Matics to the validator of corresponding owner on the Polygon stakeManager
+
+```sol
+function restake(uint256 _amount, bool _restakeRewards)
+        external
+        override
+```
+
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_amount`   | `uint256` | Amount to stake   |
+| `_restakeRewards` | `bool`  | If true, the rewards will also be restaked |
+
+### unstake()
+
+Unstakes a validator from the Polygon stakeManager contract.
+
+```sol
+function unstake() external override
+```
+
+### unjail()
+
+Unjails the validator and turns its status from UNSTAKED to ACTIVE.
+
+```sol
+function unjail() external override
+```
+
+### topUpFee()
+
+Tops up heimdall fees.
+
+```sol
+function topUpForFee(uint256 _heimdallFee)
+        external
+        override
+```
+
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_heimdallFee`   | `uint256` | Amount of Matic that will be added to the current heimdallFee provided   |
+
+### unstakeClaim()
+
+Begins the unstaking process of the staked tokens. Tokens will be unstaked after the withdraw delay has passed.
+
+```sol
+function unstakeClaim() external override
+```
+
+### claimFee()
+
+Withdraws the Heimdall fees.
+
+```sol
+function claimFee(
+        uint256 _accumFeeAmount,
+        uint256 _index,
+        bytes memory _proof
+    ) external override
+```
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_accumFeeAmount`   | `uint256` | Amount of Heimdall fees in Matic that will be withdrawn   |
+| `_index`   | `uint256` | Index of the Validator   |
+| `_proof`   | `bytes` | Proof for the Stake manager  |
+
+### withdrawRewards()
+
+Withdraws rewards to the operator owner.
+
+```sol
+function withdrawRewards() external override
+```
+
+### updateSigner()
+
+Updates the operators public key. Callable only by the owner.
+
+```sol
+function updateSigner(bytes memory _signerPubkey)
+        external
+        override
+```
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_signerPubKey`   | `bytes` | New public key used for signing on Heimdall  |
 
 ### setNodeOperatorRewardAddress()
 
