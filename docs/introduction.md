@@ -4,16 +4,18 @@ slug: /
 
 # Introduction
 
-The Lido Ethereum Liquid Staking Protocol, built on Ethereum 2.0's Beacon chain, allows their users to earn staking rewards on the Beacon chain without locking Ether or maintaining staking infrastructure.
+The Lido Polygon Liquid Staking Protocol allows its users to earn staking rewards for their staked Matic without locking Matic or maintaining staking infrastructure.
 
-Users can deposit Ether to the Lido smart contract and receive stETH tokens in return. The smart contract then stakes tokens with the DAO-picked node operators. Users' deposited funds are pooled by the DAO, node operators never have direct access to the users' assets.
+Users can deposit Matic to the Lido smart contracts and receive stMatic tokens in return. The smart contract then stakes tokens with the DAO-picked node operators.
 
-Unlike staked ether, the stETH token is free from the limitations associated with a lack of liquidity and can be transferred at any time. The stETH token balance corresponds to the amount of Beacon chain Ether that the holder could withdraw if state transitions were enabled right now in the Ethereum 2.0 network.
+Unlike staked Matic, the stMatic tokens are free from the limitations associated with a lack of liquidity and can be transferred at any time. Main difference between stEth and stMatic token is that the stMatic is non-rebaseable ERC-20 token.
 
-- [A Primer](https://lido.fi/static/Lido:Ethereum-Liquid-Staking.pdf)
+## Community
+1. Community item
+2. Community item
+3. Community item
+4. Community item
 
-## Other Lido Liquid Staking Protocols
+## License
 
-The docs provided on this site are focused on Lido Ethereum Liquid Staking Protocol & stETH token. Developer documentation on other Lido's Liquid Staking Protocols can be found:
-- Terra Liquid Staking & bLuna token [docs](https://docs.anchorprotocol.com/protocol/bonded-assets-bassets/bonded-luna-bluna)
-- Solana Liquid Staking & stSol token [docs](https://docs.solana.lido.fi/)
+All Lido Liquid Staking for Polygon contracts are licensed under the GPL-3.0 license. Check out the contracts source code at https://github.com/Shard-Labs/PoLido.
