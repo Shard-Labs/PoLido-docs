@@ -1,4 +1,4 @@
-# Lido DAO
+# Lido for Polygon DAO
 
 The Lido DAO is a Decentralized Autonomous Organization that manages the liquid staking protocol by deciding on key parameters (e.g., setting fees, assigning node operators and oracles, etc.) through the voting power of governance token (DPG) holders.
 
