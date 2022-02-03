@@ -1,4 +1,4 @@
-# Lido Matic
+# StMATIC
 
 - [Source code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/LidoMatic.sol)
 - [Deployed contract](https://etherscan.io/address/0xae7ab96520de3a18e5e111b5eaab095312d7fe84)
@@ -393,19 +393,16 @@ function claimTokens2StMatic(uint256 _tokenId)
 | `_tokenId` | `uint256` | Token ID of the claim request. |
 ---
 
----
-### setFees()
 
+## DAO Methods
+**_Note: This methods can be called by DAO-only roles._**
+
+### setFees()
 Set the DAO, operator, and insurance fee.
 
 ```solidity
-function setFees(
-  uint8 _daoFee,
-  uint8 _operatorsFee,
-  uint8 _insuranceFee
-)
+function setFees(uint8 _daoFee, uint8 _operatorsFee, uint8 _insuranceFee) onlyRole(DAO)
 ```
-
 #### Parameters
 
 | Name              | Type     | Description                                                    |
@@ -413,3 +410,127 @@ function setFees(
 | `_daoFee` | `uint8` | DAO fee in %. |
 | `_operatorsFee` | `uint8` | Operator fees in %. |
 | `_insuranceFee` | `uint8` | Insurance fee in %. |
+
+---
+
+### setDaoAddress()
+Set a new DAO address
+
+```solidity
+function setDaoAddress(address _address) onlyRole(DAO) 
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_address` | `address` | Address of the DAO. |
+
+---
+
+### setInsuranceAddress()
+Set a new insurance address
+
+```solidity
+function setInsuranceAddress(address _address) onlyRole(DAO)
+```
+
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_address` | `address` | Address of the insurance. |
+---
+
+### setNodeOperatorRegistryAddress()
+Set a new node operator registry address
+
+```solidity
+function setNodeOperatorRegistryAddress(address _address) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_address` | `address` | Address of the insurance. |
+---
+
+### setDelegationLowerBound()
+Set a lower bound amount to delegate to a validator
+
+```solidity
+function setDelegationLowerBound(uint256 _delegationLowerBound) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_delegationLowerBound` | `uint256` | Lower bound amount. |
+---
+
+### setRewardDistributionLowerBound()
+Set a lower bound for distributing reward to validators
+
+```solidity
+function setRewardDistributionLowerBound(uint256 _rewardDistributionLowerBound) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_rewardDistributionLowerBound` | `uint256` | Lower bound reward amount.  |
+---
+
+### setPoLidoNFT()
+Set PoLidoNFT address
+
+```solidity
+function setPoLidoNFT(address _poLidoNFT) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_poLidoNFT` | `address` | PoLido NFT address.  |
+---
+
+### setFxStateRootTunnel()
+Set fxStateRootTunnel address
+
+```solidity
+function setFxStateRootTunnel(address _fxStateRootTunnel) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_fxStateRootTunnel` | `address` | FxStateRootTunnel address.  |
+---
+
+### setSubmitThreshold()
+Set `submit` threshold for users
+```solidity
+function setSubmitThreshold(uint256 _submitThreshold) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_submitThreshold` | `uint256` | Threshold amount for submit.  |
+---
+
+### flipSubmitHandler()
+Set the value of submit handler to false
+```solidity
+function flipSubmitHandler() external override onlyRole(DAO)
+```
+---
+### setVersion()
+Set contract version
+```solidity
+function setVersion(string calldata _version) onlyRole(DEFAULT_ADMIN_ROLE)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_version` | `string` | Version of the contract.  |
