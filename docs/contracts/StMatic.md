@@ -1,7 +1,7 @@
 # StMATIC
 
 - [Source code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/StMATIC.sol)
-- [Deployed contract]()
+<!-- -  [Deployed contract]() -->
 
 Lido Matic is the core contract which acts as a liquid staking pool. The contract is responsible for deposits, withdrawals, minting and burning liquid tokens, delegating funds to node operators, applying fees and distributing rewards.
 
