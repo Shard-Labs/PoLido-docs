@@ -1,7 +1,7 @@
 # StMATIC
 
-- [Source code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/LidoMatic.sol)
-- [Deployed contract](https://etherscan.io/address/0xae7ab96520de3a18e5e111b5eaab095312d7fe84)
+- [Source code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/StMATIC.sol)
+- [Deployed contract]()
 
 Lido Matic is the core contract which acts as a liquid staking pool. The contract is responsible for deposits, withdrawals, minting and burning liquid tokens, delegating funds to node operators, applying fees and distributing rewards.
 
@@ -67,7 +67,7 @@ function getTotalStake(IValidatorShare _validatorShare) returns (uint256, uint25
 ---
 
 ### getLiquidRewards()
-Returns the liquid reward the StMatic contract has in a validator
+Returns the reward accumulated by the StMATIC contract in a specific validator share.
 ```solidity
 function getLiquidRewards(IValidatorShare _validatorShare) returns (uint256)
 ```
@@ -79,7 +79,7 @@ function getLiquidRewards(IValidatorShare _validatorShare) returns (uint256)
 ---
 
 ### getTotalStakeAcrossAllValidators()
-Returns the total staked across all validators 
+Returns the total delegated MATICs across all validators.
 ```solidity
 function getTotalStakeAcrossAllValidators() returns (uint256)
 ```
@@ -92,7 +92,7 @@ function getTotalPooledMatic() returns (uint256)
 ```
 ---
 
-### convertStMaticToMatic
+### convertStMaticToMatic()
 Returns the MATIC value of any StMatic amount passed to the function
 ```solidity
 function convertStMaticToMatic(uint256 _balance) returns (uint256, uint256, uint256)
@@ -312,7 +312,8 @@ Returns a boolean value indicating whether the operation succeeded
 ---
 
 ### submit()
-Send MATIC to the StMATIC contract and mints `stMATIC` to msg.sender
+Send MATIC to the StMATIC contract and mints stMATIC to msg.sender. 
+The user has first to approve the amount to the StMATIC contract.
 
 ```solidity
 function submit(uint256 _amount) returns (uint256)
@@ -322,7 +323,7 @@ function submit(uint256 _amount) returns (uint256)
 
 | Name        | Type      | Description               |
 | ----------- | --------- | ------------------------- |
-| `_amount` | `uint256` | Amount to submit |
+| `_amount` | `uint256` | Amount to submit in MATIC |
 
 #### Returns:
 Amount of stMatic minted
@@ -330,7 +331,8 @@ Amount of stMatic minted
 ---
 
 ### requestWithdraw()
-Allows withdrawal requests to be made from validators or the StMatic contract
+Allows users to request withdrawal of an amount of Matic tokens depending on the amount submitted of stMATIC. 
+This will mint a Lido NFT token which can be used later to claim the amount.
 ```solidity
  function requestWithdraw(uint256 _amount)
 ```
@@ -338,20 +340,21 @@ Allows withdrawal requests to be made from validators or the StMatic contract
 
 | Name              | Type     | Description                                                    |
 | ----------------- | -------- | -------------------------------------------------------------- |
-| `_amount` | `uint256` | Amount to withdraw. |
+| `_amount` | `uint256` | Amount to withdraw in stMATIC. |
 
 ---
 
 ### delegate()
-Delegates the MATIC deposited into the StMatic contract equally to the validators 
-```solidity
+Delegate the deposited tokens into the StMatic contract between Lido's active operators. 
+The tokens are delegated based on the operator's maxDelegationLimit factor.```solidity
 function delegate() 
-```
+
 
 ---
 
 ### claimTokens()
-Allows users claim their tokens from the validators. This requires that the user has a pending withdrawal request
+Allows users to claim their tokens from the validators. 
+This requires user to have an NFT that was minted during the requestWithdraw transaction.
 ```solidity
 function claimTokens(uint256 _tokenId)
 ```
@@ -359,18 +362,19 @@ function claimTokens(uint256 _tokenId)
 
 | Name              | Type     | Description                                                    |
 | ----------------- | -------- | -------------------------------------------------------------- |
-| `_tokenId` | `uint256` | Token ID of a pending withdrawal request. |
+| `_tokenId` | `uint256` | NFT Token ID of a pending withdrawal request. |
 ---
 
 ### distributeRewards()
-Distributes rewards claimed from validators to their operators
+Distribute rewards accumulated by lido validators. 
+90% of rewards are buffered and redelegated. 10% is distributed between DAO(2.5%), insurance(2.5%), and active operators(5%).
 ```solidity
 function distributeRewards()
 ```
 ---
 
 ### withdrawTotalDelegated()
-Allows a node operator withdraw the amount staked to a validator
+Allows the NodeOperatorRegistry contract to claim the total amount delegated to a validator share.
 ```solidity
 function withdrawTotalDelegated(address _validatorShare)
 ```
@@ -378,11 +382,12 @@ function withdrawTotalDelegated(address _validatorShare)
 
 | Name              | Type     | Description                                                    |
 | ----------------- | -------- | -------------------------------------------------------------- |
-| `_validatorShare` | `address` | Address of the validator proxy. |
+| `_validatorShare` | `address` | Address of the validator share. |
 ---
 
 ### claimTokens2StMatic()
-Claims tokens frm the validator and sends them to the StMatic contract
+Claim and transfer the tokens from a spécific validator share contract to the StMATIC contract. 
+This requires a valid Lido NFT token.
 ```solidity
 function claimTokens2StMatic(uint256 _tokenId)
 ```
