@@ -402,7 +402,9 @@ function claimTokens2StMatic(uint256 _tokenId)
 
 
 ## DAO Methods
-**_Note: This methods can be called by DAO-only roles._**
+:::note
+These methods can be called by DAO-only roles
+:::
 
 ### setFees()
 Set the DAO, operator, and insurance fee.
@@ -541,3 +543,15 @@ function setVersion(string calldata _version) onlyRole(DEFAULT_ADMIN_ROLE)
 | Name              | Type     | Description                                                    |
 | ----------------- | -------- | -------------------------------------------------------------- |
 | `_version` | `string` | Version of the contract.  |
+
+---
+## Admin Methods
+:::note
+This method can be called by ADMIN-only roles
+:::
+
+### togglePause()
+Allows the admin pause and unpause the contract
+```solidity
+function togglePause() external onlyRole(DEFAULT_ADMIN_ROLE) 
+```
