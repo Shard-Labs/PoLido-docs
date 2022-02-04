@@ -3,11 +3,13 @@
 - [Source code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/StMATIC.sol)
 <!-- -  [Deployed contract]() -->
 
-Lido Matic is the core contract which acts as a liquid staking pool. The contract is responsible for deposits, withdrawals, minting and burning liquid tokens, delegating funds to node operators, applying fees and distributing rewards.
+StMATIC is the core contract which acts as a liquid staking pool. The contract is responsible for deposits, withdrawals, 
+minting and burning liquid tokens, delegating funds to node operators, applying fees and distributing rewards.
 
-Lido Matic contract also defines stMATIC, an ERC20 token that represents the account's share of the total supply of MATIC tokens inside PoLido system. It is a non-rebasable token, which means that the amount of tokens in the user's wallet is not going to change. During time, the value of this token is changing, since the amount of MATIC tokens inside the protocol is not constant.
-
-stMATIC will be integrated in variety of DeFi applications across Ethereum and Polygon.
+StMATIC contract also defines stMATIC, an ERC20 token that represents the account's share of the total supply of MATIC 
+tokens inside PoLido system. It is a non-rebasable token, which means that the amount of tokens in the user's wallet is 
+not going to change. During time, the value of this token is changing, since the amount of MATIC tokens inside the 
+protocol is not constant. StMATIC will be integrated in variety of DeFi applications across Ethereum and Polygon.
 
 
 
