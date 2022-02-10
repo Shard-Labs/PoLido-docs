@@ -7,7 +7,7 @@ StMATIC is the core contract which acts as a liquid staking pool. The contract i
 minting and burning liquid tokens, delegating funds to node operators, applying fees and distributing rewards.
 
 StMATIC contract also defines stMATIC, an ERC20 token that represents the account's share of the total supply of MATIC 
-tokens inside PoLido system. It is a non-rebasable token, which means that the amount of tokens in the user's wallet is 
+tokens inside Lido for Polygon system. It is a non-rebasable token, which means that the amount of tokens in the user's wallet is 
 not going to change. During time, the value of this token is changing, since the amount of MATIC tokens inside the 
 protocol is not constant. StMATIC will be integrated in variety of DeFi applications across Ethereum and Polygon.
 
