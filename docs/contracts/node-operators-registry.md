@@ -151,44 +151,6 @@ Returns an instance of the validator from the stake manager
 
 ## Methods
 
-### addOperator()
-
-Add node operator named `_name` with reward address `_rewardAddress` and signer (heimdall) public key `_signerPubkey`
-
-```sol
-function addOperator(
-        string memory _name,
-        address _rewardAddress,
-        bytes memory _signerPubkey
-    )
-        external
-        override
-```
-
-#### Parameters:
-
-| Name             | Type      | Description                                                       |
-| ---------------- | --------- | ----------------------------------------------------------------- |
-| `_name`          | `string`  | Human-readable name                                               |
-| `_rewardAddress` | `address` | Goerli address which receives stMATIC rewards for this operator   |
-| `_signerPubKey`  | `bytes`   | Public key used on heimdall that is 64 bytes long.                |
-
-### stopOperator()
-
-Disable the node operator with given id. It requires operator status equal to be ACTIVE or INACTIVE
-
-```sol
-function stopOperator(uint256 _operatorId)
-        external
-        override
-```
-
-#### Parameters:
-
-| Name      | Type      | Description                       |
-| --------- | --------- | --------------------------------- |
-| `_id`     | `uint256` | Node Operator id                  |
-
 ### exitOperator()
 
 Changes the state from STOPPED to WAIT for the operator based on the given validator share address. This function can only 
@@ -208,10 +170,15 @@ function exitOperator(address _validatorShare) external override
 
 Removes the node operator with given id. It requires operator status equal to be EXIT.
 
+:::note
+This method can be called by REMOVE_OPERATOR_ROLE-only role.
+:::
+
 ```sol
 function removeOperator(uint256 _operatorId)
         external
         override
+        userHasRole(REMOVE_OPERATOR_ROLE)
 ```
 
 #### Parameters:
@@ -273,9 +240,19 @@ function setOperatorRewardAddress(address _rewardAddress)
 | ---------------- | --------- | ------------------ |
 | `_rewardAddress` | `address` | New reward address |
 
+### togglePause()
+:::note
+This method can only be called by a pause operator role.
+:::
+
+Allows an authorized user to pause the contract. 
+
+```solidity
+function togglePause() userHasRole(PAUSE_OPERATOR_ROLE) external
+```
 ## Operator Owner Methods
 :::note
-These methods can be called by only by an operator owner.
+These methods can only be called by an operator owner.
 :::
 
 ### joinOperator()
@@ -398,6 +375,48 @@ function unstakeClaim() external override
 :::note
 These methods can be called by DAO-only roles.
 :::
+
+### addOperator()
+
+Allows the DAO to add node operator named `_name` with reward address `_rewardAddress` and signer (heimdall) 
+public key `_signerPubkey`
+
+```sol
+function addOperator(
+        string memory _name,
+        address _rewardAddress,
+        bytes memory _signerPubkey
+    )
+        external
+        override
+        userHasRole(DAO_ROLE)
+```
+
+#### Parameters:
+
+| Name             | Type      | Description                                                       |
+| ---------------- | --------- | ----------------------------------------------------------------- |
+| `_name`          | `string`  | Human-readable name                                               |
+| `_rewardAddress` | `address` | Goerli address which receives stMATIC rewards for this operator   |
+| `_signerPubKey`  | `bytes`   | Public key used on heimdall that is 64 bytes long.                |
+
+### stopOperator()
+
+Allows the DAO to disable the node operator with given id. It requires operator status equal to be ACTIVE or INACTIVE
+
+```sol
+function stopOperator(uint256 _operatorId)
+        external
+        override
+        userHasRole(DAO_ROLE)
+
+```
+
+#### Parameters:
+
+| Name      | Type      | Description                       |
+| --------- | --------- | --------------------------------- |
+| `_id`     | `uint256` | Node Operator id                  |
 
 ### setDefaultMaxDelegateLimit()
 
@@ -547,7 +566,12 @@ function setStakeManager(address _stakeManager)
 | ---------- | ------- | ------------- |
 | `_stakeManager` | `address` | New stake manager address |
 
+
 ### setVersion()
+:::note
+This method can be called by DEFAULT_ADMIN_ROLE-only role.
+:::
+
 Allows the DAO to set the version of the contract address.
 
 ```sol
