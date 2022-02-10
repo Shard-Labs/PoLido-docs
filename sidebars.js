@@ -30,12 +30,7 @@ module.exports = {
       label: 'Contracts',
       items: [
         'contracts/StMatic',
-        'contracts/lido-oracle',
-        'contracts/stable-swap-state-oracle',
-        'contracts/steth-price-feed',
         'contracts/node-operators-registry',
-        'contracts/withdrawals-manager-stub',
-        'contracts/wsteth',
       ],
     },
     {
