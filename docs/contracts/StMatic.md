@@ -1,13 +1,15 @@
-# Lido Matic
+# StMATIC
 
-- [Source code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/LidoMatic.sol)
-- [Deployed contract](https://etherscan.io/address/0xae7ab96520de3a18e5e111b5eaab095312d7fe84)
+- [Source code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/StMATIC.sol)
+<!-- -  [Deployed contract]() -->
 
-Lido Matic is the core contract which acts as a liquid staking pool. The contract is responsible for deposits, withdrawals, minting and burning liquid tokens, delegating funds to node operators, applying fees and distributing rewards.
+StMATIC is the core contract which acts as a liquid staking pool. The contract is responsible for deposits, withdrawals, 
+minting and burning liquid tokens, delegating funds to node operators, applying fees and distributing rewards.
 
-Lido Matic contract also defines stMATIC, an ERC20 token that represents the account's share of the total supply of MATIC tokens inside PoLido system. It is a non-rebasable token, which means that the amount of tokens in the user's wallet is not going to change. During time, the value of this token is changing, since the amount of MATIC tokens inside the protocol is not constant.
-
-stMATIC will be integrated in variety of DeFi applications across Ethereum and Polygon.
+StMATIC contract also defines stMATIC, an ERC20 token that represents the account's share of the total supply of MATIC 
+tokens inside Lido for Polygon system. It is a non-rebasable token, which means that the amount of tokens in the user's wallet is 
+not going to change. During time, the value of this token is changing, since the amount of MATIC tokens inside the 
+protocol is not constant. StMATIC will be integrated in variety of DeFi applications across Ethereum and Polygon.
 
 
 
@@ -17,7 +19,7 @@ stMATIC will be integrated in variety of DeFi applications across Ethereum and P
 
 Returns the name of the token
 
-```sol
+```solidity
 function name() returns (string)
 ```
 
@@ -25,7 +27,7 @@ function name() returns (string)
 
 Returns the symbol of the token, usually a shorter version of the name
 
-```sol
+```solidity
 function symbol() returns (string)
 ```
 
@@ -33,7 +35,7 @@ function symbol() returns (string)
 
 Returns the number of decimals for getting user representation of a token amount.
 
-```sol
+```solidity
 function decimals() returns (uint8)
 ```
 
@@ -41,198 +43,99 @@ function decimals() returns (uint8)
 
 Returns the amount of tokens in existence.
 
-```sol
+```solidity
 function totalSupply() returns (uint256)
 ```
-
-:::note
-Always equals to `getTotalPooledEther()` since token amount
-is pegged to the total amount of Ether controlled by the protocol.
-:::
-
-### getTotalPooledEther()
-
-Returns the entire amount of Ether controlled by the protocol
-
-```sol
-function getTotalPooledEther() returns (uint256)
-```
-
-:::note
-The sum of all ETH balances in the protocol, equals to the total supply of stETH.
-:::
-
+---
 ### balanceOf()
 
 Returns the amount of tokens owned by the `_account`
 
-```sol
+```solidity
 function balanceOf(address _account) returns (uint256)
 ```
+---
 
-:::note
-Balances are dynamic and equal the `_account`'s share in the amount of the
-total Ether controlled by the protocol. See `sharesOf`.
-:::
-
-### getTotalShares()
-
-Returns the total amount of shares in existence.
-
-```sol
-function getTotalShares() returns (uint256)
+### getTotalStake()
+Returns the total amount of stake the StMatic contract has in a validator
+```solidity
+function getTotalStake(IValidatorShare _validatorShare) returns (uint256, uint256)
 ```
+#### Parameters:
 
-### sharesOf()
+| Name         | Type      | Description                  |
+| ------------ | --------- | ---------------------------- |
+| `_validatorShare` | `ValidatorShare` | An instance of the validator share contract  |
+---
 
-Returns the amount of shares owned by `_account`
-
-```sol
-function sharesOf(address _account) returns (uint256)
+### getLiquidRewards()
+Returns the reward accumulated by the StMATIC contract in a specific validator share.
+```solidity
+function getLiquidRewards(IValidatorShare _validatorShare) returns (uint256)
 ```
+#### Parameters:
 
-### getSharesByPooledEth()
+| Name         | Type      | Description                  |
+| ------------ | --------- | ---------------------------- |
+| `_validatorShare` | `ValidatorShare` | An instance of the validator share contract  |
+---
 
-Returns the amount of shares that corresponds to `_ethAmount` protocol-controlled Ether
-
-```sol
-function getSharesByPooledEth(uint256 _ethAmount) returns (uint256)
+### getTotalStakeAcrossAllValidators()
+Returns the total delegated MATICs across all validators.
+```solidity
+function getTotalStakeAcrossAllValidators() returns (uint256)
 ```
+---
 
-### getPooledEthByShares()
-
-Returns the amount of Ether that corresponds to `_sharesAmount` token shares
-
-```sol
-function getPooledEthByShares(uint256 _sharesAmount) returns (uint256)
+### getTotalPooledMatic()
+Returns total pooled matic
+```solidity
+function getTotalPooledMatic() returns (uint256)
 ```
+---
 
-### getFee()
-
-Returns staking rewards fee rate
-
-```sol
-function getFee() returns (uint16)
+### convertStMaticToMatic()
+Returns the MATIC value of any StMatic amount passed to the function
+```solidity
+function convertStMaticToMatic(uint256 _balance) returns (uint256, uint256, uint256)
 ```
+#### Parameters:
 
-#### Returns:
+| Name         | Type      | Description                  |
+| ------------ | --------- | ---------------------------- |
+| `_balance` | `uint256` | Amount of StMatic to be convert to MATIC  |
+---
 
-Fee in basis points. 10000 BP corresponding to 100%.
-
-### getFeeDistribution()
-
-Returns fee distribution proportion
-
-```sol
-function getFeeDistribution() returns (
-  uint16 treasuryFeeBasisPoints,
-  uint16 insuranceFeeBasisPoints,
-  uint16 operatorsFeeBasisPoints
-)
+### convertMaticToStMatic
+Returns the StMatic value of any MATIC amount passed to the function
+```solidity
+function convertMaticToStMatic(uint256 _balance) returns (uint256, uint256, uint256)
 ```
+#### Parameters:
 
-#### Returns:
+| Name         | Type      | Description                  |
+| ------------ | --------- | ---------------------------- |
+| `_balance` | `uint256` | Amount of MATIC to be convert to StMatic |
+---
 
-| Name                      | Type     | Description                                                                            |
-| ------------------------- | -------- | -------------------------------------------------------------------------------------- |
-| `treasuryFeeBasisPoints`  | `uint16` | Fee for the treasury. Expressed in basis points, 10000 BP corresponding to 100%.       |
-| `insuranceFeeBasisPoints` | `uint16` | Fee for the insurance fund. Expressed in basis points, 10000 BP corresponding to 100%. |
-| `operatorsFeeBasisPoints` | `uint16` | Fee for the node operators. Expressed in basis points, 10000 BP corresponding to 100%. |
-
-### getWithdrawalCredentials()
-
-Returns current credentials to withdraw ETH on ETH 2.0 side after the phase 2 is launched
-
-```sol
-function getWithdrawalCredentials() returns (bytes32)
+### getMinValidatorBalance()
+Returns the minimum balance allowed by a validator
+```solidity
+function getMinValidatorBalance() returns returns (uint256)
 ```
+---
 
-### getBufferedEther()
-
-Get the amount of Ether temporary buffered on this contract balance
-
-:::note
-
-Buffered balance is kept on the contract from the moment the funds are received from user
-until the moment they are actually sent to the official Deposit contract.
-
-:::
-
-```sol
-function getBufferedEther()  returns (uint256)
+### getMaticFromTokenId()
+Returns the amount of MATIC that will be claimed from an NFT token
+```solidity
+function getMaticFromTokenId(uint256 _tokenId) returns (uint256)
 ```
+#### Parameters:
 
-#### Returns:
-
-Amount of buffered funds in wei
-
-### getDepositContract()
-
-Gets deposit contract handle
-
-```sol
-function getDepositContract() public view returns (IDepositContract)
-```
-
-#### Returns:
-
-Address of deposit contract
-
-### getOracle()
-
-Returns authorized oracle address
-
-```sol
-function getOracle() returns (address)
-```
-
-### getOperators()
-
-Gets node operators registry interface handle
-
-```sol
-function getOperators() returns (INodeOperatorsRegistry)
-```
-
-#### Returns:
-
-Address of NodeOperatorsRegistry contract
-
-### getTreasury()
-
-Returns the treasury address
-
-```sol
-function getTreasury() returns (address)
-```
-
-### getInsuranceFund()
-
-Returns the insurance fund address
-
-```sol
-function getInsuranceFund() returns (address)
-```
-
-### getBeaconStat()
-
-Returns the key values related to Beacon-side
-
-```sol
-function getBeaconStat() returns (
-  uint256 depositedValidators,
-  uint256 beaconValidators,
-  uint256 beaconBalance
-)
-```
-
-#### Returns:
-
-| Name                  | Type      | Description                                                                    |
-| --------------------- | --------- | ------------------------------------------------------------------------------ |
-| `depositedValidators` | `uint256` | Number of deposited validators                                                 |
-| `beaconValidators`    | `uint256` | Number of Lido's validators visible in the Beacon state, reported by oracles   |
-| `beaconBalance`       | `uint256` | Total amount of Beacon-side Ether (sum of all the balances of Lido validators) |
+| Name         | Type      | Description                  |
+| ------------ | --------- | ---------------------------- |
+| `_tokenId` | `uint256` | NFT token ID |
+---
 
 ## Methods
 
@@ -406,233 +309,249 @@ Requirements:
 | `_subtractedValue` | `uint256` | Amount of tokens to decrease allowance |
 
 #### Returns:
-
 Returns a boolean value indicating whether the operation succeeded
 
+---
+
 ### submit()
+Send MATIC to the StMATIC contract and mints stMATIC to msg.sender. 
+The user has first to approve the amount to the StMATIC contract.
 
-Send funds to the pool with optional \_referral parameter
-
-```sol
-function submit(address _referral) returns (uint256)
+```solidity
+function submit(uint256 _amount) returns (uint256)
 ```
 
 #### Parameters:
 
 | Name        | Type      | Description               |
 | ----------- | --------- | ------------------------- |
-| `_referral` | `address` | Optional referral address |
+| `_amount` | `uint256` | Amount to submit in MATIC |
 
 #### Returns:
+Amount of stMatic minted
 
-Amount of StETH shares generated
+---
 
-### depositBufferedEther()
-
-Deposits buffered ethers to the official DepositContract. If `_maxDeposits` provided makes no more than `_maxDeposits` deposit calls
-
-```sol
-function depositBufferedEther()
-function depositBufferedEther(uint256 _maxDeposits)
+### requestWithdraw()
+Allows users to request withdrawal of an amount of Matic tokens depending on the amount submitted of stMATIC. 
+This will mint a Lido NFT token which can be used later to claim the amount.
+```solidity
+ function requestWithdraw(uint256 _amount)
 ```
-
-#### Parameters:
-
-| Name           | Type      | Description                 |
-| -------------- | --------- | --------------------------- |
-| `_maxDeposits` | `uint256` | Number of max deposit calls |
-
-### burnShares()
-
-Destroys `_sharesAmount` shares from `_account`'s holdings, decreasing the total amount of shares.
-
-```sol
-function burnShares(
-  address _account,
-  uint256 _sharesAmount
-) returns (uint256 newTotalShares)
-```
-
-:::note
-This doesn't decrease the token total supply.
-
-Requirements:
-
-- `_account` cannot be the zero address.
-- `_account` must hold at least `_sharesAmount` shares.
-- the contract must not be paused.
-
-:::
-
 #### Parameters
 
-| Name            | Type      | Description                         |
-| --------------- | --------- | ----------------------------------- |
-| `_account`      | `address` | Address where shares will be burned |
-| `_sharesAmount` | `uint256` | Amount of shares to burn            |
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_amount` | `uint256` | Amount to withdraw in stMATIC. |
 
-#### Returns
+---
 
-Amount of totalShares after tokens burning
+### delegate()
+Delegate the deposited tokens into the StMatic contract between Lido's active operators. 
+The tokens are delegated based on the operator's maxDelegationLimit factor.```solidity
+function delegate() 
 
-### stop()
 
-Stop pool routine operations
+---
 
-```sol
-function stop()
+### claimTokens()
+Allows users to claim their tokens from the validators. 
+This requires user to have an NFT that was minted during the requestWithdraw transaction.
+```solidity
+function claimTokens(uint256 _tokenId)
 ```
+#### Parameters
 
-### resume()
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_tokenId` | `uint256` | NFT Token ID of a pending withdrawal request. |
+---
 
-Resume pool routine operations
-
-```sol
-function resume()
+### distributeRewards()
+Distribute rewards accumulated by lido validators. 
+90% of rewards are buffered and redelegated. 10% is distributed between DAO(2.5%), insurance(2.5%), and active operators(5%).
+```solidity
+function distributeRewards()
 ```
+---
 
-### setFee()
+### withdrawTotalDelegated()
+Allows the NodeOperatorRegistry contract to claim the total amount delegated to a validator share.
+```solidity
+function withdrawTotalDelegated(address _validatorShare)
+```
+#### Parameters
 
-Set fee rate to `_feeBasisPoints` basis points. The fees are accrued when oracles report staking results
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_validatorShare` | `address` | Address of the validator share. |
+---
 
-```sol
-function setFee(uint16 _feeBasisPoints)
+### claimTokens2StMatic()
+Claim and transfer the tokens from a spécific validator share contract to the StMATIC contract. 
+This requires a valid Lido NFT token.
+```solidity
+function claimTokens2StMatic(uint256 _tokenId)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_tokenId` | `uint256` | Token ID of the claim request. |
+---
+
+
+## DAO Methods
+:::note
+These methods can be called by DAO-only roles
+:::
+
+### setFees()
+Set the DAO, operator, and insurance fee.
+
+```solidity
+function setFees(uint8 _daoFee, uint8 _operatorsFee, uint8 _insuranceFee) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_daoFee` | `uint8` | DAO fee in %. |
+| `_operatorsFee` | `uint8` | Operator fees in %. |
+| `_insuranceFee` | `uint8` | Insurance fee in %. |
+
+---
+
+### setDaoAddress()
+Set a new DAO address
+
+```solidity
+function setDaoAddress(address _address) onlyRole(DAO) 
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_address` | `address` | Address of the DAO. |
+
+---
+
+### setInsuranceAddress()
+Set a new insurance address
+
+```solidity
+function setInsuranceAddress(address _address) onlyRole(DAO)
 ```
 
 #### Parameters
 
 | Name              | Type     | Description                                                    |
 | ----------------- | -------- | -------------------------------------------------------------- |
-| `_feeBasisPoints` | `uint16` | Fee expressed in basis points, 10000 BP corresponding to 100%. |
+| `_address` | `address` | Address of the insurance. |
+---
 
-### setFeeDistribution()
+### setNodeOperatorRegistryAddress()
+Set a new node operator registry address
 
-Set fee distribution: `_treasuryFeeBasisPoints` basis points go to the treasury,
-`_insuranceFeeBasisPoints` basis points go to the insurance fund,
-`_operatorsFeeBasisPoints` basis points go to node operators.
-The sum has to be 10 000.
-
-```sol
-function setFeeDistribution(
-  uint16 _treasuryFeeBasisPoints,
-  uint16 _insuranceFeeBasisPoints,
-  uint16 _operatorsFeeBasisPoints
-)
+```solidity
+function setNodeOperatorRegistryAddress(address _address) onlyRole(DAO)
 ```
-
 #### Parameters
 
-| Name                       | Type     | Description                                                                            |
-| -------------------------- | -------- | -------------------------------------------------------------------------------------- |
-| `_treasuryFeeBasisPoints`  | `uint16` | Fee for the treasury. Expressed in basis points, 10000 BP corresponding to 100%.       |
-| `_insuranceFeeBasisPoints` | `uint16` | Fee for the insurance fund. Expressed in basis points, 10000 BP corresponding to 100%. |
-| `_operatorsFeeBasisPoints` | `uint16` | Fee for the node operators. Expressed in basis points, 10000 BP corresponding to 100%. |
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_address` | `address` | Address of the insurance. |
+---
 
-### setOracle()
+### setDelegationLowerBound()
+Set a lower bound amount to delegate to a validator
 
-Set authorized oracle contract address to `_oracle`
-
-```sol
-function setOracle(address _oracle)
+```solidity
+function setDelegationLowerBound(uint256 _delegationLowerBound) onlyRole(DAO)
 ```
-
 #### Parameters
 
-| Name      | Type      | Description                |
-| --------- | --------- | -------------------------- |
-| `_oracle` | `address` | Address of oracle contract |
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_delegationLowerBound` | `uint256` | Lower bound amount. |
+---
 
-### setTreasury()
+### setRewardDistributionLowerBound()
+Set a lower bound for distributing reward to validators
 
-Set treasury contract address to `_treasury`. This contract is used to accumulate the protocol treasury fee
-
-```sol
-function setTreasury(address _treasury)
+```solidity
+function setRewardDistributionLowerBound(uint256 _rewardDistributionLowerBound) onlyRole(DAO)
 ```
-
 #### Parameters
 
-| Name        | Type      | Description                                        |
-| ----------- | --------- | -------------------------------------------------- |
-| `_treasury` | `address` | Address of contract which accumulates treasury fee |
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_rewardDistributionLowerBound` | `uint256` | Lower bound reward amount.  |
+---
 
-### setInsuranceFund()
+### setPoLidoNFT()
+Set PoLidoNFT address
 
-Set insuranceFund contract address to `_insuranceFund`.
-This contract is used to accumulate the protocol insurance fee
-
-```sol
-function setInsuranceFund(address _insuranceFund)
+```solidity
+function setPoLidoNFT(address _poLidoNFT) onlyRole(DAO)
 ```
-
 #### Parameters
 
-| Name             | Type      | Description                                         |
-| ---------------- | --------- | --------------------------------------------------- |
-| `_insuranceFund` | `address` | Address of contract which accumulates insurance fee |
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_poLidoNFT` | `address` | PoLido NFT address.  |
+---
 
-### setWithdrawalCredentials()
+### setFxStateRootTunnel()
+Set fxStateRootTunnel address
 
-Set credentials to withdraw ETH on ETH 2.0 side after the phase 2 is launched to `_withdrawalCredentials`
-
-```sol
-function setWithdrawalCredentials(bytes32 _withdrawalCredentials)
+```solidity
+function setFxStateRootTunnel(address _fxStateRootTunnel) onlyRole(DAO)
 ```
+#### Parameters
 
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_fxStateRootTunnel` | `address` | FxStateRootTunnel address.  |
+---
+
+### setSubmitThreshold()
+Set `submit` threshold for users
+```solidity
+function setSubmitThreshold(uint256 _submitThreshold) onlyRole(DAO)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_submitThreshold` | `uint256` | Threshold amount for submit.  |
+---
+
+### flipSubmitHandler()
+Set the value of submit handler to false
+```solidity
+function flipSubmitHandler() external override onlyRole(DAO)
+```
+---
+### setVersion()
+Set contract version
+```solidity
+function setVersion(string calldata _version) onlyRole(DEFAULT_ADMIN_ROLE)
+```
+#### Parameters
+
+| Name              | Type     | Description                                                    |
+| ----------------- | -------- | -------------------------------------------------------------- |
+| `_version` | `string` | Version of the contract.  |
+
+---
+## Admin Methods
 :::note
-Note that `setWithdrawalCredentials` discards all unused signing keys as the signatures are invalidated.
+This method can be called by ADMIN-only roles
 :::
 
-#### Parameters
-
-| Name                     | Type      | Description                                                                                 |
-| ------------------------ | --------- | ------------------------------------------------------------------------------------------- |
-| `_withdrawalCredentials` | `bytes32` | Hash of withdrawal multisignature key as accepted by the deposit_contract.deposit functione |
-
-### withdraw()
-
-Issues withdrawal request. **Not implemented.**
-
-```sol
-function withdraw(uint256 _amount, bytes32 _pubkeyHash)
+### togglePause()
+Allows the admin pause and unpause the contract
+```solidity
+function togglePause() external onlyRole(DEFAULT_ADMIN_ROLE) 
 ```
-
-:::note
-Will be upgraded to an actual implementation when withdrawals are enabled (Phase 1.5 or 2 of Eth2 launch, likely late 2021 or 2022). At the moment withdrawals are not possible in the beacon chain and there's no workaround
-:::
-
-#### Parameters
-
-| Name          | Type      | Description                 |
-| ------------- | --------- | --------------------------- |
-| `_amount`     | `uint256` | Amount of StETH to withdraw |
-| `_pubkeyHash` | `bytes32` | Receiving address           |
-
-### pushBeacon()
-
-Updates the number of Lido-controlled keys in the beacon validators set and their total balance.
-
-```sol
-function pushBeacon(uint256 _beaconValidators, uint256 _beaconBalance)
-```
-
-#### Parameters
-
-| Name                | Type      | Description                                       |
-| ------------------- | --------- | ------------------------------------------------- |
-| `_beaconValidators` | `uint256` | Number of Lido's keys in the beacon state         |
-| `_beaconBalance`    | `uint256` | Summarized balance of Lido-controlled keys in wei |
-
-### transferToVault()
-
-Send funds to recovery Vault. Overrides default AragonApp behaviour.
-
-```sol
-function transferToVault(address _token)
-```
-
-#### Parameters
-
-| Name     | Type      | Description                        |
-| -------- | --------- | ---------------------------------- |
-| `_token` | `address` | Token to be sent to recovery vault |
