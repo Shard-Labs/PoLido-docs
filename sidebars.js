@@ -6,6 +6,7 @@ module.exports = {
       type: 'category',
       label: 'Guides',
       items: [
+        'guides/node-operators',
         'guides/node-operator-manual',
         'guides/oracle-operator-manual',
         'guides/deposit-security-manual',
@@ -39,5 +40,6 @@ module.exports = {
       items: ['security/bugbounty'],
     },
     'deployed-contracts',
+    'faq'
   ],
 }
