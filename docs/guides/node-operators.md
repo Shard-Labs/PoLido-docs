@@ -66,8 +66,8 @@ Matic tokens and call the function stake from the address that owns the Operator
    
    ![mgxkvjfkmjyys1mfsqi9](https://user-images.githubusercontent.com/17001801/153895814-77ba1f37-ee0d-4f35-828c-a9faf7e5dcf7.png)
 
-   Enter the address of the NODE_OPERATOR_REGISTRY_PROXY* "0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a"
-   (the address in the image below is deprecated) in the field like from the image below, and then click on the blue 
+   Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` (please refer to the address in the deployment address table ) in the field 
+    like from the image below, and then click on the blue 
    `At Address` button. This will provide you the interface to communicate with the NodeOperator.
    
    ![fdunad10cz2y2fpnxp2o](https://user-images.githubusercontent.com/17001801/153897300-ffce2e6f-1fe3-47e9-b79e-80b2bfa60897.png)
@@ -127,9 +127,8 @@ Guide:
 
    ![mgxkvjfkmjyys1mfsqi9](https://user-images.githubusercontent.com/17001801/153895814-77ba1f37-ee0d-4f35-828c-a9faf7e5dcf7.png)
 
-   Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` "0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a" 
-   (the address in the image below is deprecated) in the field like from image below, and then click on the blue At 
-   `Address` button. This will provide you the interface to communicate with the NodeOperator.
+   Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` (please refer to the address in the deployment address table ) in the field 
+   like from image below, and then click on the blue `At Address` button. This will provide you the interface to communicate with the NodeOperator.
 
    ![fdunad10cz2y2fpnxp2o](https://user-images.githubusercontent.com/17001801/153897300-ffce2e6f-1fe3-47e9-b79e-80b2bfa60897.png)
 
@@ -165,8 +164,7 @@ Guide:
 
    ![mgxkvjfkmjyys1mfsqi9](https://user-images.githubusercontent.com/17001801/153895814-77ba1f37-ee0d-4f35-828c-a9faf7e5dcf7.png)
 
-   Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` "0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a" 
-   (the address in the image below is deprecated) in the field like in the image below, and then click on the blue 
+   Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` (please refer to the address in the deployment address table ) in the field like in the image below, and then click on the blue 
    `At Address` button. This will provide you the interface to communicate with the NodeOperator.
 
    ![fdunad10cz2y2fpnxp2o](https://user-images.githubusercontent.com/17001801/153897300-ffce2e6f-1fe3-47e9-b79e-80b2bfa60897.png)
@@ -175,7 +173,7 @@ Guide:
 
    ![cvununqdej0wyk5oyqlc](https://user-images.githubusercontent.com/17001801/153898159-0fddef99-2468-448a-b70a-2afc7e3cbe20.png)
 
-   Expand the joinOperator​ function arguments by clicking on the arrow that is pointing down.
+   Expand the `joinOperator` function arguments by clicking on the arrow that is pointing down.
 
    ![al7yb6ggmvwcupoavy4g](https://user-images.githubusercontent.com/17001801/153908438-ce1fca50-f814-4f69-b9b1-408ca6b9ce83.png)
 
@@ -183,4 +181,8 @@ Guide:
 
    You have successfully joined the Lido for Polygon platform!
 
-   Note:: Deployment addresses can be retrieved from Lido for Polygon README:
+   Note:: Deployment addresses can be retrieved from the table below
+
+   | Mainnet    | Testnet   | Description        |
+   | ---------- | --------- | ------------------ |
+   | ` `        | ` `       | Name of contract   |

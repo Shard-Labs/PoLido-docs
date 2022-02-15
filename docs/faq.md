@@ -13,11 +13,12 @@
       2. They will still receive the commission from the delegator rewards that they set. The commission rate is 
          initially 5% (this value can be updated through the governance vote).
       
-      3. Delegator rewards across all node operators are getting distributed in the following way:90% gets restaked  
-         5% goes to the treasury,  5% is distributed proportionally (depends on the validator score) among all active node operators.
+      3. Delegator rewards across all node operators are getting distributed in the following way: 2.5% to the dao  
+         2.5% goes to the treasury,  5% is distributed equally amongst all active node operators.
 
-3. What is the validator score? 
-   1. Each operator has a counter that will increase each time he gets slashed. When the counter gets increased, the timestamp is stored that we later use to check if the penalty period passed. With this counter, we are calculating rewards percentage that an operator will get.
+3. What is the validator slashing? 
+   1. If the operator gets slashed by Polygon stakeManager, it will not receive any rewards until it became active again.
+      After slashing, the timestamp of the slashing is recorded, and is later used to check if the penalty period has passed. 
 
 4. How to compensate them for the possible returns that node operators lose by joining Lido for Polygon instead of running these validators independently?
 
