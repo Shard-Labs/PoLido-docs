@@ -95,13 +95,13 @@ contract. Import INodeOperator interface to remix and attach it to the `NODE_OPE
 After the voting process is over, the DAO will create a new operator for you by calling `addOperator`  (Shard Labs owns 
 the private key with DAO role during testnet phase).
 
-Next thing to do is to approve your NFT staking token to the newly created Operator. Call `getOwnerValidatorProxy`
+Next thing to do is to approve your NFT staking token to the newly created Operator. Call `getNodeOperator`
 function by interacting with the NodeOperatorRegistry to retrieve the address of the ValidatorProxy that was created. 
 You will need to approve the NFT token to the retrieved address. After you've approved the token, call the `joinOperator` 
 function. That's it! You are now a part of the Lido for Polygon system!
 
 Guide:
-1. Approving the NFT token to ValidatorProxy
+1. Fetching the address of the validator proxy
 
    Visit https://remix.ethereum.org/, and create a new contract with an arbitrary name.
 
@@ -114,8 +114,33 @@ Guide:
    // SPDX-License-Identifier: GPL-3.0
    pragma solidity 0.8.7;
 
+   enum NodeOperatorStatus {
+      INACTIVE,
+      ACTIVE,
+      STOPPED,
+      UNSTAKED,
+      CLAIMED,
+      WAIT,
+      EXIT,
+      JAILED,
+      EJECTED
+   }
+
+   struct NodeOperator {
+      NodeOperatorStatus status;
+      string name;
+      address rewardAddress;
+      bytes signerPubkey;
+      address validatorShare;
+      address validatorProxy;
+      uint256 validatorId;
+      uint256 commissionRate;
+      uint256 maxDelegateLimit;
+   }
+   
    interface INodeOperatorRegistry {
-        function getOwnerValidatorProxy() external view returns (address);
+        function getNodeOperator(uint256 _operatorId) external view returns (NodeOperator memory);
+        function getNodeOperator(address _owner) external view returns (NodeOperator memory);
    }
    ```
    
@@ -138,7 +163,50 @@ Guide:
 
    ![agr8kfprb94onqhp7eem](https://user-images.githubusercontent.com/17001801/153906028-e9f28cfd-a940-4eb3-b617-8a8b9a88214c.png)
 
-2. Calling the `joinOperator` Function
+2. Approving the NFT token to ValidatorProxy
+
+   Visit https://remix.ethereum.org/, and create a new contract with the name IERC721.sol.
+
+   ![xd2imfoj79nwf4aa0eml](https://user-images.githubusercontent.com/17001801/153889832-90ed824e-f08f-4916-a77c-c59fc3245b3d.png)
+
+   Paste the following code in the created contract:
+
+   ```solidity
+   // SPDX-FileCopyrightText: 2021 Shardlabs
+   // SPDX-License-Identifier: GPL-3.0
+   pragma solidity 0.8.7;
+   
+   interface IERC721 { 
+        function approve(address to, uint256 tokenId) external;
+   }
+   ```
+
+   Press CTRL + S to compile the code.
+
+   After that, click on `Deploy` and make sure that `IERC721` is selected in the CONTRACT drop down list. 
+   Also, make sure that Injected Web3 is selected in the ENVIRONMENT drop down list and that ACCOUNT corresponds to the
+   address that owns the NFT (you can change the connected account via MetaMask).
+
+   ![vox](https://user-images.githubusercontent.com/17001801/154110691-306d27ad-0763-4d10-b87c-7045048b9159.jpg)
+
+   Enter the address of the NFT Contract Address (please refer to the address in the deployment address table ) in the 
+   field like in the image below, and then click on the blue `At Address` button. This will provide you the interface 
+   to communicate with the NFT contract.
+
+   ![fdun](https://user-images.githubusercontent.com/17001801/154135589-0ca464fd-d925-4c73-a82f-0dfb296be681.png)
+
+   Expand the `IERC721` interface from the bottom left corner of the Remix by clicking on the ">".
+
+   ![fduou](https://user-images.githubusercontent.com/17001801/154135946-92328e18-2ed5-4ad3-8de4-9b14c6af7751.png)
+
+   Expand the `approve` function arguments by clicking on the arrow that is pointing down.
+   
+   ![fduoual](https://user-images.githubusercontent.com/17001801/154136966-2d9a87c3-087d-44f8-bc25-1e3bee3996e1.png)
+
+   Make sure that you are connected with the right address by checking the ACCOUNT field inside Remix. After confirming,
+   click on `approve` and confirm the transaction. You have successfully approved the ValidatorProxy to transfer your NFT.
+
+3. Calling the `joinOperator` Function
    
    Visit https://remix.ethereum.org/, and create a new contract with an arbitrary name.
 
@@ -150,6 +218,8 @@ Guide:
    // SPDX-FileCopyrightText: 2021 Shardlabs
    // SPDX-License-Identifier: GPL-3.0
    pragma solidity 0.8.7;
+
+    
    
    interface INodeOperatorRegistry {
         function joinOperator() external;
@@ -185,4 +255,6 @@ Guide:
 
    | Mainnet    | Testnet   | Description        |
    | ---------- | --------- | ------------------ |
-   | ` `        | ` `       | Name of contract   |
+   | ` `        | `0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a `       | Node Operator Registry Proxy   |
+   | ` `        | `0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7 `       | NFT Contract Address   |
+

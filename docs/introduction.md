@@ -28,8 +28,7 @@ and sends that amount of stMATIC to the user. Since stMATIC is a non-rebasable t
 amount. During time, while rewards are accumulated, the value of stMATIC token increases. MATIC tokens are then 
 delegated across Polygon validators that are part of Lido for Polygon protocol.
 
-Accumulated rewards are redistributed once a day between node operators (5%), Lido DAO (5%) and the rest (90%) is 
-re-delegated. 
+Accumulated rewards are redistributed once a day between node operators (5%), Lido DAO (2.5%) and the Treasury (2.5%).
 
 ![scexvqo4bwkvygnvbhmc](https://user-images.githubusercontent.com/17001801/153630647-b219ab3b-b269-4be3-9c75-26776d60b2cf.png)
 
