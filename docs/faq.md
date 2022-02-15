@@ -1,9 +1,9 @@
 # FAQ
-1. What does it mean for an existing node operators to join PoLido? How do they transfer their slot?
+1. What does it mean for an existing node operators to join Lido for Polygon? How do they transfer their slot?
 
    1. Existing node operators can join without losing their slot and without downtime (take a look at the second scenario 
       in the guide above). 
-   2. They will transfer their ownership to PoLido by calling the `joinOperator` function from the account that currently 
+   2. They will transfer their ownership to Lido for Polygon by calling the `joinOperator` function from the account that currently 
    controls the validator. (this has to be done by using the same address that was used in stakeManager).
 
 2. How will their rewards and fees change? 
@@ -19,11 +19,11 @@
 3. What is the validator score? 
    1. Each operator has a counter that will increase each time he gets slashed. When the counter gets increased, the timestamp is stored that we later use to check if the penalty period passed. With this counter, we are calculating rewards percentage that an operator will get.
 
-4. How to compensate them for the possible returns that node operators lose by joining PoLido instead of running these validators independently?
+4. How to compensate them for the possible returns that node operators lose by joining Lido for Polygon instead of running these validators independently?
 
-   1. Many validators have commission rate set around 5%, which means that they would gain more rewards by joining PoLido since they would not lose their delegators, commission rate is set to 5%, and additionally, they will get the part of PoLido delegator rewards.
+   1. Many validators have commission rate set around 5%, which means that they would gain more rewards by joining Lido for Polygon since they would not lose their delegators, commission rate is set to 5%, and additionally, they will get the part of Lido for Polygon delegator rewards.
    
-   2. The only scenario where they would lose on the rewards is if they had significant commission fees set that could not be compensated by the PoLido delegator rewards distribution.
+   2. The only scenario where they would lose on the rewards is if they had significant commission fees set that could not be compensated by the Lido for Polygon delegator rewards distribution.
    
    3. We are currently analyzing historical Polygon Staking APY to think of an appropriate incentive program for node operators.
 
