@@ -219,3 +219,145 @@ using a nonce.
 3. unstakeClaimTokens_new: claim the token by a nonce link.
 4. getTotalStake: get the total staked amount link.
 5. getLiquidRewards: get the accumulated rewards link
+
+
+### PoLidoNFT 
+
+The PoLidoNFT contract is an ERC721 contract used by the StMatic contract to manage withdrawal requests.
+
+Each time a user calls the requestWithdraw function inside the StMatic contract a new NFT is minted and mapped with the 
+request. 
+
+When a user owns an NFT he can:
+
+- Claim a tokens from the withdraw request
+- Trade NFT to someone else, who will then be able to claim
+- Approve it to someone else who willl then also be able to claim
+
+This ERC721 is slightly modified so it returns a list of owned tokens of an address by using the public mapping 
+owner2Tokens. Same goes for retrieving the list of approved tokens by using the mapping address2Approved.
+
+### Operator contract
+- Manage operators
+
+  The validator contract is used to stake on the polygon stake manager. Each operator gets a new validatorProxy contract 
+  created each time the addOperator function is called, this validatorProxy is used as the owner of the validator on the 
+  Polygon stakeManager.Thought it an operator’s owner can interact with the stakeManager API to:
+  - stakeFor: stake a validator link.
+  - unstake: unstake a validator link.
+  - topUpForFee: topUpHeimdallFees for a validator link.
+  - validatorStake: get the total staked by a validator link.
+  - restake: restake amount link.
+  - getValidatorContract: get validator share contract link.
+  - updateSIgner: allows to update signer pubkey
+  - claimFee: allows to withdraw heimdall fees
+  - updateCommisionRate: allows to update commision
+  - withdrawRewards: withdraw rewards link
+
+### Manage Operators
+
+1. Add an operator
+   1. A new Operator expresses their interest to join the PoLido protocol.
+   2. The DAO votes to include the new operator. After successful voting for inclusion, the Node Operator becomes active:
+      1. A new validator contract is created.
+      2. Set the status to NotStaked.
+      3. A default max delegation value is set that means the system will delegate this amount (at max) each time the 
+         delegate function is called.
+         
+   Each operator owner can interact with his operator using the reward address to do the following actions:
+   
+   - stake
+   - join
+   - Unstake
+   - topUpHeimdallFees
+   - unjail
+   - restake
+   - update signer pub key
+   - unstake claim.
+   - claim fee.
+
+#### Stake an operator
+
+1. The operator calls the stake function, including the amount of MATICs and heimdallFees.
+
+2. The operator is switched to staked status and becomes ready to accept delegation.
+
+#### Join
+
+1. Allows already staked validators to join the PoLido protocol.
+
+2. They have first to approve the NFT token to the specific validatorProxy contract.
+
+3. Call this function to join the system.
+
+
+#### Unstake an Operator
+
+When an operator is ongoing to be unstaked, the NodeOperator contract calls the StMatic contract in his turn calls the 
+validatorShare contract and withdraws the total delegated MATIC tokens. After the withdrawal delay the lido contract can 
+claim those tokens. This last step claiming the tokens can be done using a cron job.
+
+#### Remove an Operator
+
+Remove an operator is the last step after it was unstaked and he claimed his staked tokens. The DAO can call this 
+function to remove the operator and delete the validatorProxy contract.
+
+#### Top Up Heimdall Fees
+
+A validator has the possibility to topup the heimdall fees used by the heimdall and the Bor node for validating new blocks
+
+#### Unjail
+
+When an operator was unstaked there is a period where he can restake again, by default this feature is disabled.
+
+#### Restake
+
+Allows a validator to stake more Matics, by default this feature is disabled.
+
+#### Update Signer Public Key
+
+Allows the operator to update the Signer Public key used by the heimdall.
+
+#### Unstake Claim
+
+Allows the operator owner to claim his staked MATIC tokens.
+
+#### Claim Fee
+
+Allows the operator owner to claim his heimdall fees.
+
+#### Update Operator Commision Rate
+
+Update the operator's commission rate.
+
+#### Set Stake Amount And Fees
+
+Set the min and max amount and heimdall fees an operator can use to stake or topup heimdall fees.
+
+### Validator Factory
+
+The validator Factory is used to deploy new validatorProxy that is later added to an array of validators.
+#### create
+- permission:
+
+  - OPERATOR
+
+- description:
+
+  - Creates a new ValidatorProxy and appends it to array of validators
+
+
+#### remove
+
+- permission:
+
+  - OPERATOR
+
+- description:
+
+  - Removes a ValidatorProxy determined by its address from the array of validators
+
+
+### Sequence Diagram of Operators Lifecycle
+
+![squence-diagram](https://user-images.githubusercontent.com/17001801/154485063-7829e045-9e56-49be-9a7c-3fce30624387.png)

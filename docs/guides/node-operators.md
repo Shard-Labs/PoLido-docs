@@ -294,10 +294,57 @@ Guide:
 
    You have successfully joined the Lido for Polygon platform!
 
-   Note:: Deployment addresses can be retrieved from the table below
+## How to exit the protocol as a Node Operator
 
-   | Mainnet    | Testnet   | Description        |
-   | ---------- | --------- | ------------------ |
-   | ` `        | `0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a `       | Node Operator Registry Proxy   |
-   | ` `        | `0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7 `       | NFT Contract Address   |
+A Node Operator can exit the protocol by calling the `unstake()` function in the NodeOperatorRegistry contract. The
+Node Operator can then claim their stake by calling the `unstakeClaim()` function. Here's a guide to exit the protocol
+as a NodeOperator:
+
+1. Call `unstake()` function in NodeOperator contract. 
+   
+   Visit https://remix.ethereum.org/, and create a new contract with the name NodeOperator.sol.
+
+   ![xd2imfoj79nwf4aa0eml](https://user-images.githubusercontent.com/17001801/153889832-90ed824e-f08f-4916-a77c-c59fc3245b3d.png)
+
+   Paste the following code in the created contract:
+
+   ```solidity
+   // SPDX-FileCopyrightText: 2021 Shardlabs
+   // SPDX-License-Identifier: GPL-3.0
+   pragma solidity 0.8.7;
+   
+   interface INodeOperatorRegistry { 
+        function unstake() external;
+        function unstakeClaim() external;
+   }
+   ```
+
+   Press CTRL + S to compile the code.
+
+   After that, click on `Deploy` and make sure that `INodeOperatorRegistry` is selected in the CONTRACT drop down list.
+   Also, make sure that Injected Web3 is selected in the ENVIRONMENT drop down list and that ACCOUNT corresponds to the
+   address that owns the token (you can change the connected account via MetaMask).
+
+   ![mgxkvjfkmjyys1mfsqi9](https://user-images.githubusercontent.com/17001801/153895814-77ba1f37-ee0d-4f35-828c-a9faf7e5dcf7.png)
+
+   Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` (please refer to the address in the deployment address table ) in the field
+   like from image below, and then click on the blue `At Address` button. This will provide you the interface to communicate with the NodeOperator.
+
+   ![fdunad10cz2y2fpnxp2o](https://user-images.githubusercontent.com/17001801/153897300-ffce2e6f-1fe3-47e9-b79e-80b2bfa60897.png)
+
+   Expand the `INODEOPERATORREGISTRY` interface from the bottom left corner of the Remix by clicking on the ">".
+
+   ![154491968](https://user-images.githubusercontent.com/17001801/154492398-3d1aa9d2-d6d8-40fe-b65c-58dd33040b33.jpeg)
+
+   click on `unstake` to unstake the node operator from the node manager.
+2. To claim the staked tokens, the node operator needs to wait until after the withdrawal delay period before calling
+   the `unstakeClaim` in the diagram above.
+
+
+Note:: Deployment addresses can be retrieved from the table below
+
+| Mainnet    | Testnet   | Description        |
+| ---------- | --------- | ------------------ |
+| ` `        | `0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a `       | Node Operator Registry Proxy   |
+| ` `        | `0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7 `       | NFT Contract Address   |
 
