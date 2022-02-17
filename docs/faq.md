@@ -39,3 +39,6 @@
    1. Polygon is planning to enable auctions for adding more validators. More information here: https://forum.matic.network/t/auction-mechansim-a-mechanism-to-replace-bad-and-under-performing-validators/1044
    
    2. Until then, we will have to coordinate with Polygon team to get some initial slots.
+
+7. Can an operator exit the protocol at anytime?
+   1. Yes, an operator can quit the protocol at anytime they wish to.

@@ -41,7 +41,50 @@ provide 10 Matic for amount to stake and 20 more for Heimdall fee. To create it,
 Matic tokens and call the function stake from the address that owns the Operator. 
 
 ### Guide:
-1. Calling the stake Function
+1. Approve MATIC to Validator Proxy
+
+   Visit https://remix.ethereum.org/, and create a new contract with the name IERC20.sol.
+
+   ![xd2imfoj79nwf4aa0eml](https://user-images.githubusercontent.com/17001801/153889832-90ed824e-f08f-4916-a77c-c59fc3245b3d.png)
+
+   Paste the following code in the created contract:
+
+   ```solidity
+   // SPDX-FileCopyrightText: 2021 Shardlabs
+   // SPDX-License-Identifier: GPL-3.0
+   pragma solidity 0.8.7;
+   
+   interface IERC20 { 
+        function approve(address spender, uint256 amount) external returns (bool);
+   }
+   ```
+
+   Press CTRL + S to compile the code.
+
+   After that, click on `Deploy` and make sure that `IERC20` is selected in the CONTRACT drop down list.
+   Also, make sure that Injected Web3 is selected in the ENVIRONMENT drop down list and that ACCOUNT corresponds to the
+   address that owns the token (you can change the connected account via MetaMask).
+
+   ![voxes](https://user-images.githubusercontent.com/17001801/154425200-64be1e73-b5bb-411b-8690-a77c5d5bf3f2.jpg)
+
+   Enter the address of the matic token contract in the field like in the image below, and then click on the blue 
+   `At Address` button. This will provide you the interface to communicate with the token contract.
+
+   ![voxes](https://user-images.githubusercontent.com/17001801/154426844-6ffbfdf3-f002-4bb7-8e08-4a6d130fc13b.jpg)
+
+   Expand the IERC20 interface from the bottom left corner of the Remix by clicking on the ">".
+   
+   ![voxes](https://user-images.githubusercontent.com/17001801/154427639-abefe956-4109-496f-ac99-10b5e5934ab2.jpg)
+
+   Expand the approve function arguments by clicking on the arrow that is pointing down.
+
+   ![voxes](https://user-images.githubusercontent.com/17001801/154428709-a4198d84-e2b2-4f06-99ba-a858111bb234.jpg)
+
+   Make sure that you are connected with the right address by checking the ACCOUNT field inside Remix. After confirming, 
+   click on approve and confirm the transaction. You have successfully approved the ValidatorProxy to spend your 
+   Matic tokens.
+
+2. Calling the stake Function
 
    Visit https://remix.ethereum.org/, and create a new contract with an arbitrary name.
    
@@ -193,15 +236,15 @@ Guide:
    field like in the image below, and then click on the blue `At Address` button. This will provide you the interface 
    to communicate with the NFT contract.
 
-   ![fdun](https://user-images.githubusercontent.com/17001801/154135589-0ca464fd-d925-4c73-a82f-0dfb296be681.png)
+   ![154135589](https://user-images.githubusercontent.com/17001801/154412684-bf7a0d66-8d3d-4dcd-93c9-34b7c467ab46.jpeg)
 
    Expand the `IERC721` interface from the bottom left corner of the Remix by clicking on the ">".
 
-   ![fduou](https://user-images.githubusercontent.com/17001801/154135946-92328e18-2ed5-4ad3-8de4-9b14c6af7751.png)
+   ![154135946](https://user-images.githubusercontent.com/17001801/154412910-d5730e16-83f7-4d56-a2dd-bd8e9eeca7f7.jpeg)
 
    Expand the `approve` function arguments by clicking on the arrow that is pointing down.
-   
-   ![fduoual](https://user-images.githubusercontent.com/17001801/154136966-2d9a87c3-087d-44f8-bc25-1e3bee3996e1.png)
+
+   ![154413145](https://user-images.githubusercontent.com/17001801/154413799-68574c02-1c89-4b7e-8373-04dec3dd654c.jpeg)
 
    Make sure that you are connected with the right address by checking the ACCOUNT field inside Remix. After confirming,
    click on `approve` and confirm the transaction. You have successfully approved the ValidatorProxy to transfer your NFT.

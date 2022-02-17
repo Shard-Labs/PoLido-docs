@@ -1,6 +1,7 @@
 module.exports = {
   docs: [
     'introduction',
+    'architecture',
     'lido-dao',
     {
       type: 'category',
