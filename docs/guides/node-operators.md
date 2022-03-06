@@ -296,50 +296,92 @@ Guide:
 
 ## How to exit the protocol as a Node Operator
 
-A Node Operator can exit the protocol by calling the `unstake()` function in the NodeOperatorRegistry contract. The
-Node Operator can then claim their stake by calling the `unstakeClaim()` function. Here's a guide to exit the protocol
+There are two ways a Node Operator can exit the protocol. First, by calling the `unstake()` function in the NodeOperatorRegistry contract, the
+Node Operator can then claim their stake by calling the `unstakeClaim()` function. Second, by calling `migrate()` function.
+Here's a guide to exit the protocol
 as a NodeOperator:
 
-1. Call `unstake()` function in NodeOperator contract. 
+1. Exiting the Node Operator Registry by Unstaking
+   1. Call `unstake()` function in NodeOperator contract. 
    
-   Visit https://remix.ethereum.org/, and create a new contract with the name NodeOperator.sol.
+      Visit https://remix.ethereum.org/, and create a new contract with the name NodeOperator.sol.
 
-   ![xd2imfoj79nwf4aa0eml](https://user-images.githubusercontent.com/17001801/153889832-90ed824e-f08f-4916-a77c-c59fc3245b3d.png)
+      ![xd2imfoj79nwf4aa0eml](https://user-images.githubusercontent.com/17001801/153889832-90ed824e-f08f-4916-a77c-c59fc3245b3d.png)
 
-   Paste the following code in the created contract:
+      Paste the following code in the created contract:
 
-   ```solidity
-   // SPDX-FileCopyrightText: 2021 Shardlabs
-   // SPDX-License-Identifier: GPL-3.0
-   pragma solidity 0.8.7;
+      ```solidity
+      // SPDX-FileCopyrightText: 2021 Shardlabs
+      // SPDX-License-Identifier: GPL-3.0
+      pragma solidity 0.8.7;
    
-   interface INodeOperatorRegistry { 
-        function unstake() external;
-        function unstakeClaim() external;
-   }
-   ```
+      interface INodeOperatorRegistry { 
+           function unstake() external;
+           function unstakeClaim() external;
+      }
+      ```
 
-   Press CTRL + S to compile the code.
+      Press CTRL + S to compile the code.
 
-   After that, click on `Deploy` and make sure that `INodeOperatorRegistry` is selected in the CONTRACT drop down list.
-   Also, make sure that Injected Web3 is selected in the ENVIRONMENT drop down list and that ACCOUNT corresponds to the
-   address that owns the token (you can change the connected account via MetaMask).
+      After that, click on `Deploy` and make sure that `INodeOperatorRegistry` is selected in the CONTRACT drop down list.
+      Also, make sure that Injected Web3 is selected in the ENVIRONMENT drop down list and that ACCOUNT corresponds to the
+      address that owns the token (you can change the connected account via MetaMask).
 
-   ![mgxkvjfkmjyys1mfsqi9](https://user-images.githubusercontent.com/17001801/153895814-77ba1f37-ee0d-4f35-828c-a9faf7e5dcf7.png)
+      ![mgxkvjfkmjyys1mfsqi9](https://user-images.githubusercontent.com/17001801/153895814-77ba1f37-ee0d-4f35-828c-a9faf7e5dcf7.png)
 
-   Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` (please refer to the address in the deployment address table ) in the field
-   like from image below, and then click on the blue `At Address` button. This will provide you the interface to communicate with the NodeOperator.
+      Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` (please refer to the address in the deployment address table ) in the field
+      like from image below, and then click on the blue `At Address` button. This will provide you the interface to communicate with the NodeOperator.
 
-   ![fdunad10cz2y2fpnxp2o](https://user-images.githubusercontent.com/17001801/153897300-ffce2e6f-1fe3-47e9-b79e-80b2bfa60897.png)
+      ![fdunad10cz2y2fpnxp2o](https://user-images.githubusercontent.com/17001801/153897300-ffce2e6f-1fe3-47e9-b79e-80b2bfa60897.png)
 
-   Expand the `INODEOPERATORREGISTRY` interface from the bottom left corner of the Remix by clicking on the ">".
+      Expand the `INODEOPERATORREGISTRY` interface from the bottom left corner of the Remix by clicking on the ">".
 
-   ![154491968](https://user-images.githubusercontent.com/17001801/154492398-3d1aa9d2-d6d8-40fe-b65c-58dd33040b33.jpeg)
+      ![154491968](https://user-images.githubusercontent.com/17001801/154492398-3d1aa9d2-d6d8-40fe-b65c-58dd33040b33.jpeg)
 
-   click on `unstake` to unstake the node operator from the node manager.
-2. To claim the staked tokens, the node operator needs to wait until after the withdrawal delay period before calling
-   the `unstakeClaim` in the diagram above.
+      click on `unstake` to unstake the node operator from the node manager.
+   2. To claim the staked tokens, the node operator needs to wait until after the withdrawal delay period before calling
+      the `unstakeClaim` in the diagram above.
 
+2. Exiting the Node Operator Registry by Migrating
+   Exiting the Node Operator Registry by Migrating does not unstake a validator or remove a validator from a stake manager. 
+   However, the validator no longer becomes part of the Lido for Polygon protocol after migrating, and the validator
+   ownership is transferred to the reward address. 
+   1. Call `migrate()` function in the NodeOperator contract.
+
+      Visit https://remix.ethereum.org/, and create a new contract with the name NodeOperator.sol.
+
+      ![xd2imfoj79nwf4aa0eml](https://user-images.githubusercontent.com/17001801/153889832-90ed824e-f08f-4916-a77c-c59fc3245b3d.png)
+
+      Paste the following code in the created contract:
+
+      ```solidity
+      // SPDX-FileCopyrightText: 2021 Shardlabs
+      // SPDX-License-Identifier: GPL-3.0
+      pragma solidity 0.8.7;
+   
+      interface INodeOperatorRegistry { 
+           function migrate() external;
+      }
+      ```
+
+      Press CTRL + S to compile the code.
+
+      After that, click on `Deploy` and make sure that `INodeOperatorRegistry` is selected in the CONTRACT drop down list.
+      Also, make sure that Injected Web3 is selected in the ENVIRONMENT drop down list and that ACCOUNT corresponds to the
+      address that owns the token (you can change the connected account via MetaMask).
+
+      ![mgxkvjfkmjyys1mfsqi9](https://user-images.githubusercontent.com/17001801/153895814-77ba1f37-ee0d-4f35-828c-a9faf7e5dcf7.png)
+
+      Enter the address of the `NODE_OPERATOR_REGISTRY_PROXY` (please refer to the address in the deployment address table ) in the field
+      like from image below, and then click on the blue `At Address` button. This will provide you the interface to communicate with the NodeOperator.
+
+      ![fdunad10cz2y2fpnxp2o](https://user-images.githubusercontent.com/17001801/153897300-ffce2e6f-1fe3-47e9-b79e-80b2bfa60897.png)
+
+      Expand the `INODEOPERATORREGISTRY` interface from the bottom left corner of the Remix by clicking on the ">".
+
+      ![154491968](https://user-images.githubusercontent.com/17001801/156926923-eba66e07-3414-4fb1-820b-b5e27bee9959.jpg)
+
+      click on `migrate` to migrate the node operator from the node manager.
 
 Note:: Deployment addresses can be retrieved from the table below
 
