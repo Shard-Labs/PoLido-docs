@@ -16,7 +16,7 @@ StMatic can be stopped by the DAO vote. No operations changing StMatic balances 
 5. Staking withdrawals (once available) can't be performed.
 
 StMatic contract specifies two roles: **DEFAULT_ADMIN_ROLE** (address can pause the protocol by calling the `togglePause()` function) 
-and the **DAO_ROLE**. The DEFAULT_ADMIN_ROLE is assigned to the multi-sig contract [https://polygonscan.com/address/0xd65Fa54F8DF43064dfd8dDF223A446fc638800A9](https://polygonscan.com/address/0xd65Fa54F8DF43064dfd8dDF223A446fc638800A9). 
+and the **DAO_ROLE**. The DEFAULT_ADMIN_ROLE is assigned to the multi-sig contract [https://etherscan.io/address/0xd65Fa54F8DF43064dfd8dDF223A446fc638800A9](https://etherscan.io/address/0xd65Fa54F8DF43064dfd8dDF223A446fc638800A9). 
 And the DAO_ROLE is set when the contract is initially being deployed, and can be changed only by the DAO after deployment
 by calling the `setDaoAddress()` function.
 
