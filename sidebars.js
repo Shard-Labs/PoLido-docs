@@ -25,7 +25,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Token guides',
-      items: ['token-guides/steth-superuser-functions'],
+      items: ['token-guides/stmatic-superuser-functions'],
     },
     {
       type: 'category',
