@@ -79,7 +79,20 @@ NFT token as a voucher for MATIC token claim after the un-bonding period (approx
 
 ### Claim Tokens
 After the un-bonding period, a user will be able to submit his NFT to Lido for Polygon, NFT gets burned and user receives his MATIC.
-To claim your tokens, click on the claim tab on the app and click on the `claim` button. On the confirmation page that
-appears, confirm the transaction.
+To claim your tokens, click on the claim tab on the app and click on the `claim` button. 
 
-![claim](https://user-images.githubusercontent.com/17001801/157092846-d036992b-0dca-41bc-be24-01451133b9b7.jpg)
+![claim_tokens](https://user-images.githubusercontent.com/17001801/157210817-c5182629-87e0-4c11-ad71-6ad694345b29.jpeg)
+
+On the confirmation page that appears, confirm the transaction.
+
+![confirm_claim](https://user-images.githubusercontent.com/17001801/157213203-0f99949d-0d94-4c7f-9f27-8b745d35008c.jpeg)
+
+On confirming the transaction, a dialog will display indicating that the claim process is in progress. 
+
+![claim_progres](https://user-images.githubusercontent.com/17001801/157214051-8938da58-9413-4554-bbf8-504c621aa91f.jpeg)
+
+After confirmation, the app displays a dialog with the message `Reward claimed`, and the user gets their MATIC tokens in
+their wallet. 
+
+![claim_success](https://user-images.githubusercontent.com/17001801/157215437-6ca2e7b5-1400-4202-a17a-2e2ea2599a15.jpeg)
+
