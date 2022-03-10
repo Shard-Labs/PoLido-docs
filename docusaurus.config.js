@@ -1,22 +1,22 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'PoLido Docs',
-  tagline: 'Documentation for the PoLido staking protocol',
-  url: 'https://polido.github.io',
+  title: 'Lido For Polygon Docs',
+  tagline: 'Documentation Lido For Polygon staking protocol',
+  url: 'https://polygon.lido.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon-32x32.png',
   organizationName: 'Shard-Labs', // Usually your GitHub org/user name.
-  projectName: 'PoLido-docs', // Usually your repo name.
+  projectName: 'Lido-for-polygon-docs', // Usually your repo name.
   themeConfig: {
     prism: {
       additionalLanguages: ['solidity'],
     },
     navbar: {
-      title: 'PoLido Docs',
+      title: 'Lido For Polygon Docs',
       logo: {
-        alt: 'Lido Logo',
+        alt: 'Lido For Polygon Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -36,7 +36,7 @@ module.exports = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/lidofinance/docs/blob/main/',
+          editUrl: 'https://github.com/Shard-Labs/PoLido-docs/blob/main/',
         },
       },
     ],

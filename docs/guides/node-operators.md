@@ -163,7 +163,6 @@ Guide:
       STOPPED,
       UNSTAKED,
       CLAIMED,
-      WAIT,
       EXIT,
       JAILED,
       EJECTED

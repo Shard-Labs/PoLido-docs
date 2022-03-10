@@ -1,4 +1,4 @@
-# Guide to Easy Track
+<!-- # Guide to Easy Track
 This document is intended for: 
 - the Lido Node Operators who wish to increase their staking limits within the Lido protocol;
 - the Lido Ecosystem Grants Organisation members who wish to allocate funds into LEGO program;
@@ -108,4 +108,4 @@ In case the minimum objections threshold of 0.5% of total LDO supply hasn't been
 2. **Motion rejected.**
 In case the minimum objections threshold of 0.5% of total LDO supply has been reached, the motion is considered rejected. It will be automatically de-activated and put to the motion archive available under the 'Archive motions' section of Easy Track UI.
 3. **Motion canceled.**
-In case you find out you have made a mistake when starting the motion (e.g. you have added the wrong address for the new reward program or you've misclicked when specifying the amount of tokens to be allocated etc.), you can cancel the motion at any moment before it has been enacted. To do so, click on the motion to see the detailed motion view and press 'Cancel' motion button top right. Please note, this is on-chain action, and you will have to sign a transaction via WalletConnect Safe app, as well as a confirmation from another Finance Team multi-sig owner to complete it (gas costs apply).
+In case you find out you have made a mistake when starting the motion (e.g. you have added the wrong address for the new reward program or you've misclicked when specifying the amount of tokens to be allocated etc.), you can cancel the motion at any moment before it has been enacted. To do so, click on the motion to see the detailed motion view and press 'Cancel' motion button top right. Please note, this is on-chain action, and you will have to sign a transaction via WalletConnect Safe app, as well as a confirmation from another Finance Team multi-sig owner to complete it (gas costs apply). -->

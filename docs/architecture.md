@@ -1,4 +1,4 @@
-# Lido for Polygon Architecture
+# Architecture
 
 The Lido for Polygon architecture has 3 main parts:
 
@@ -308,7 +308,7 @@ A validator has the possibility to topup the heimdall fees used by the heimdall 
 
 #### Unjail
 
-When an operator was unstaked there is a period where he can restake again, by default this feature is disabled.
+Allows a validator to switch his status from locked to ative.
 
 #### Restake
 

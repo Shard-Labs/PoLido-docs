@@ -1,6 +1,4 @@
-# SDKs
-
-<!--  -->
+<!-- # SDKs
 
 ### Lido UI Library
 
@@ -22,4 +20,4 @@ Library for interaction with Lido contracts.
 Library to efficiently load network data for Lido, validate node operator keys and find key duplicates.
 
 - Pypi: [https://pypi.org/project/lido-sdk/](https://pypi.org/project/lido-sdk/)
-- GitHub: [https://github.com/lidofinance/lido-python-sdk](https://github.com/lidofinance/lido-python-sdk)
+- GitHub: [https://github.com/lidofinance/lido-python-sdk](https://github.com/lidofinance/lido-python-sdk) -->

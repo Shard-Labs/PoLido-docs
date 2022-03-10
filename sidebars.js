@@ -1,24 +1,24 @@
 module.exports = {
   docs: [
-    'introduction',
+    'overview',
     'architecture',
-    'lido-dao',
+    'how-lido-for-polygon-works',
     {
       type: 'category',
       label: 'Guides',
       items: [
         'guides/node-operators',
-        'guides/node-operator-manual',
+        // 'guides/node-operator-manual',
         'guides/protocol-levers',
         'guides/etherscan-voting',
-        'guides/easy-track-guide',
+        // 'guides/easy-track-guide',
       ],
     },
-    {
-      type: 'category',
-      label: 'Integrations',
-      items: ['integrations/sdk', 'integrations/subgraph'],
-    },
+    // {
+    //   type: 'category',
+    //   label: 'Integrations',
+    //   items: ['integrations/sdk', 'integrations/subgraph'],
+    // },
     {
       type: 'category',
       label: 'Token guides',
@@ -32,11 +32,11 @@ module.exports = {
         'contracts/node-operators-registry',
       ],
     },
-    {
-      type: 'category',
-      label: 'Security',
-      items: ['security/bugbounty'],
-    },
+    // {
+    //   type: 'category',
+    //   label: 'Security',
+    //   items: ['security/bugbounty'],
+    // },
     'deployed-contracts',
     'faq'
   ],
