@@ -3,6 +3,7 @@ module.exports = {
     'overview',
     'architecture',
     'how-lido-for-polygon-works',
+    'fees',
     {
       type: 'category',
       label: 'Guides',
