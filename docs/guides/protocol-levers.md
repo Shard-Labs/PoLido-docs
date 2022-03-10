@@ -11,9 +11,8 @@ All existing levers are listed below, grouped by the contract.
 
 The following contracts are upgradeable by the DAO voting:
 
-- [`Lido`](/contracts/lido)
+- [`StMatic`](/contracts/StMatic)
 - [`NodeOperatorsRegistry`](/contracts/node-operators-registry)
-- [`LidoOracle`](/contracts/lido-oracle)
 
 Upgradeability is implemented by the Aragon kernel and base contracts. To upgrade an app, one needs
 the `dao.APP_MANAGER_ROLE` permission provided by Aragon. All upgradeable contracts use the
@@ -21,269 +20,248 @@ the `dao.APP_MANAGER_ROLE` permission provided by Aragon. All upgradeable contra
 
 [unstructured storage pattern]: https://blog.openzeppelin.com/upgradeability-using-unstructured-storage
 
-## [Lido](/contracts/lido)
+## [StMatic](/contracts/StMatic)
 
-### Burning stETH tokens
+### Fees
 
-- Mutator: `burnShares(address _account, uint256 _sharesAmount)`
-  - Permission required: `BURN_ROLE`
+The entity fee for `_daoFee`, `_operatorsFee`, `_insuranceFee`, all expressed in % that sum up to `100%`.
 
-DAO members can burn token shares via DAO voting to offset slashings using insurance funds.
-E.g. protocol was slashed by 5 Ether; by burning the amount of shares corresponding to 5 stETH
-the stakers can be made whole.
-
-### Oracle
-
-The address of the oracle contract.
-
-- Mutator: `setOracle(address)`
-  - Permission required: `SET_ORACLE`
-- Accessor: `getOracle() returns (address)`
-
-This contract serves as a bridge between ETH 2.0 -> ETH oracle committee members and the rest of the protocol,
-implementing quorum between the members. The oracle committee members report balances controlled by the DAO
-on the ETH 2.0 side, which can go up because of reward accumulation and can go down due to slashing.
-
-### Fee
-
-The total fee, in basis points (`10000` corresponding to `100%`).
-
-- Mutator: `setFee(uint16)`
-  - Permission required: `MANAGE_FEE`
-- Accessor: `getFee() returns (uint16)`
+- Mutator: `setFees(uint8 _daoFee, uint8 _operatorsFee, uint8 _insuranceFee)`
+  - Permission required: `DAO`
+- Accessor: `entityFees() returns (
+  {
+     uint8 dao;
+     uint8 operators;
+     uint8 insurance;
+  }
+)`
 
 The fee is taken on staking rewards and distributed between the treasury, the insurance fund, and
 node operators.
 
-### Fee distribution
+### DAO Address
 
-Controls how the fee is distributed between the treasury, the insurance fund, and node operators.
-Each fee component is in basis points; the sum of all components must add up to 1 (`10000` basis points).
+The DAO address for the StMatic contract.
 
-- Mutator: `setFeeDistribution(uint16 treasury, uint16 insurance, uint16 operators)`
-  - Permission required: `MANAGE_FEE`
-- Accessor: `getFeeDistribution() returns (uint16 treasury, uint16 insurance, uint16 operators)`
+- Mutator: `setDaoAddress(address _address)`
+  - Permission required: `DAO`
+- Accessor: `dao() returns(address)`
 
-### ETH 2.0 withdrawal Credentials
 
-Credentials to withdraw ETH on ETH 2.0 side after phase 2 is launched.
+### Insurance Address
 
-- Mutator: `setWithdrawalCredentials(bytes)`
-  - Permission required: `MANAGE_WITHDRAWAL_KEY`
-- Accessor: `getWithdrawalCredentials() returns (bytes)`
+The insurance address for the StMatic contract.
 
-The protocol uses these credentials to register new ETH 2.0 validators.
+- Mutator: `setInsuranceAddress(address _address)`
+  - Permission required: `DAO`
+- Accessor: `insurance() returns(address)`
 
-### Deposit loop iteration limit
+### NodeOperatorRegistry Address
 
-Controls how many ETH 2.0 deposits can be made in a single transaction.
+The Node Operator Registry contract address for the StMatic contract.
 
-- A parameter of the `depositBufferedEther(uint256)` function
-- Default value: `16`
-- [Scenario test](https://github.com/lidofinance/lido-dao/blob/master/test/scenario/lido_deposit_iteration_limit.js)
+- Mutator: `setNodeOperatorRegistryAddress(address _address)`
+  - Permission required: `DAO`
+- Accessor: `nodeOperatorRegistry() returns(INodeOperatorRegistry)`
 
-When someone calls `depositBufferedEther`, `Lido` tries to register as many ETH 2.0 validators
-as it can given the buffered Ether amount. The limit is passed as an argument to this function and
-is needed to prevent the transaction from [failing due to the block gas limit], which is possible
-if the amount of the buffered Ether becomes sufficiently large.
+### DelegationLowerBound Address
 
-[failing due to the block gas limit]: https://github.com/ConsenSys/smart-contract-best-practices/blob/8f99aef/docs/known_attacks.md#gas-limit-dos-on-a-contract-via-unbounded-operations
+The new lower bound for delegation for the StMatic contract.
+
+- Mutator: `setDelegationLowerBound(uint256 _delegationLowerBound)`
+  - Permission required: `DAO`
+- Accessor: `delegationLowerBound() returns(uint256)`
+
+### DistributionLowerBound Address
+
+The new lower bound for rewards distribution for the StMatic contract.
+
+- Mutator: `setRewardDistributionLowerBound(uint256 _rewardDistributionLowerBound)`
+  - Permission required: `DAO`
+- Accessor: `rewardDistributionLowerBound() returns(uint256)`
+
+### PoLidoNFT Address
+
+The new poLidoNFT address for the StMatic contract.
+
+- Mutator: `setPoLidoNFT(address _poLidoNFT)`
+  - Permission required: `DAO`
+- Accessor: `poLidoNFT() returns(IPoLidoNFT)`
+
+### FxStateRootTunnel Address
+
+The new fxStateRootTunnel address for the StMatic contract.
+
+- Mutator: `setFxStateRootTunnel(address _fxStateRootTunnel)`
+  - Permission required: `DAO`
+- Accessor: `fxStateRootTunnel() returns(IFxStateRootTunnel)`
+
+### SubmitThreshold Address
+
+The new SubmitThreshold address for the StMatic contract.
+
+- Mutator: `setSubmitThreshold(uint256 _submitThreshold)`
+  - Permission required: `DAO`
+- Accessor: `submitThreshold() returns(uint256)`
+
+
+### SubmitHandler Address
+
+The submit handler  enables or disables the `submit` function.
+
+- Mutator: `flipSubmitHandler()`
+  - Permission required: `DAO`
+- Accessor: `submitHandler() returns(bool)`
+
 
 ### Pausing
 
-- Mutators: `stop()`, `resume()`
-  - Permission required: `PAUSE_ROLE`
-- Accessor: `isStopped() returns (bool)`
+- Mutators: `togglePause()`
+  - Permission required: `DEFAULT_ADMIN_ROLE`
+- Accessor: `paused() returns (bool)`
 
-When paused, `Lido` doesn't accept user submissions, doesn't allow user withdrawals and oracle
-report submissions. No token actions (burning, transferring, approving transfers and changing
-allowances) are allowed. The following transactions revert:
+When paused, `StMatic` doesn't accept user submissions, doesn't allow user withdrawals and reward distribution.
+No token actions (burning, transferring, approving transfers and changing allowances) are allowed. 
+The following transactions revert:
 
-- Plain Ether transfers;
-- calls to `submit(address)`;
-- calls to `depositBufferedEther(uint256)`;
-- calls to `withdraw(uint256, bytes32)` (withdrawals are not implemented yet).
-- calls to `pushBeacon(uint256, uint256)`;
-- calls to `burnShares(address, uint256)`
-- calls to `transfer(address, uint256)`
-- calls to `transferFrom(address, address, uint256)`
-- calls to `approve(address, uint256)`
-- calls to `increaseAllowance(address, uint)`
-- calls to `decreaseAllowance(address, uint)`
+- calls to `submit(uint256)`;
+- calls to `requestWithdraw(uint256)`;
+- calls to `delegate()` 
+- calls to `claimTokens(uint256)`;
+- calls to `distributeRewards()`
+- calls to `withdrawTotalDelegated()`
+- calls to `claimTokens2StMatic(uint256)`
 
-### TODO
-
-- Treasury (`getTreasury() returns (address)`; mutator?)
-- Insurance fund (`getInsuranceFund() returns (address)`; mutator?)
-- Transfer to vault (`transferToVault()`)
 
 ## [NodeOperatorsRegistry](/contracts/node-operators-registry)
 
-### Node Operators list
+### Adding a node operator
 
-- Mutator: `addNodeOperator(string _name, address _rewardAddress, uint64 _stakingLimit)`
-  - Permission required: `ADD_NODE_OPERATOR_ROLE`
-- Mutator: `setNodeOperatorName(uint256 _id, string _name)`
-  - Permission required: `SET_NODE_OPERATOR_NAME_ROLE`
-- Mutator: `setNodeOperatorRewardAddress(uint256 _id, address _rewardAddress)`
-  - Permission required: `SET_NODE_OPERATOR_ADDRESS_ROLE`
-- Mutator: `setNodeOperatorStakingLimit(uint256 _id, uint64 _stakingLimit)`
-  - Permission required: `SET_NODE_OPERATOR_LIMIT_ROLE`
+Add a new Node Operator to the registry and part of the larger Lido for polygon protocol.
+- Mutator: `addOperator(string memory _name, uint8 address _rewardAddress, bytes memory _signerPubkey)`
+  - Permission required: `DAO_ROLE`
 
-Node Operators act as validators on the Beacon chain for the benefit of the protocol. Each
-node operator submits no more than `_stakingLimit` signing keys that will be used later
-by the protocol for registering the corresponding ETH 2.0 validators. As oracle committee
-reports rewards on the ETH 2.0 side, the fee is taken on these rewards, and part of that fee
-is sent to node operators’ reward addresses (`_rewardAddress`).
+### Removing a node operator
 
-### Deactivating a node operator
-
-- Mutator: `setNodeOperatorActive(uint256 _id, bool _active)`
-  - Permission required: `SET_NODE_OPERATOR_ACTIVE_ROLE`
-
-Misbehaving node operators can be deactivated by calling this function. The protocol skips
-deactivated operators during validator registration; also, deactivated operators don’t
+A node operator can be removed from the registry by calling this function. Operators removed from protocol don’t
 take part in fee distribution.
 
-### Managing node operator’s signing keys
+- Mutator: `removeOperator(uint256 _operatorId)`
+  - Permission required: `REMOVE_OPERATOR_ROLE`
 
-- Mutator: `addSigningKeys(uint256 _operator_id, uint256 _quantity, bytes _pubkeys, bytes _signatures)`
-  - Permission required: `MANAGE_SIGNING_KEYS`
-- Mutator: `removeSigningKey(uint256 _operator_id, uint256 _index)`
-  - Permission required: `MANAGE_SIGNING_KEYS`
+### Unstaking a node operator
 
-Allow to manage signing keys for the given node operator.
+A node operator can be unstaked from the protocol by the DAO. The DAO can withdraw delegated tokens from an unstaked 
+node operator. 
 
-> Signing keys can also be managed by the reward address of a signing provider by calling
-> the equivalent functions with the `OperatorBH` suffix: `addSigningKeysOperatorBH`, `removeSigningKeyOperatorBH`.
+- Mutator: `unstake(uint256 _operatorId)`
+  - Permission required: `DAO_ROLE`
 
-### Reporting new stopped validators
+### Maximum delegate limit
 
-- Mutator: `reportStoppedValidators(uint256 _id, uint64 _stoppedIncrement)`
-  - Permission required: `REPORT_STOPPED_VALIDATORS_ROLE`
+The maximum delegate limit can be changes by the DAO. This determines how much is delegated to each node operator.
+The new maximum delegate limit must be less than 10Billion. 
 
-Allows to report that `_stoppedIncrement` more validators of a node operator have become stopped.
+- Mutator: `setDefaultMaxDelegateLimit(uint256 _defaultMaxDelegateLimit)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `defaultMaxDelegateLimit() returns(uint256)`
 
-## [LidoOracle](/contracts/lido-oracle)
+### Maximum delegate limit
 
-### Lido
+The maximum delegate limit can be changes by the DAO. This determines how much is delegated to each node operator.
+The new maximum delegate limit must be less than 10Billion.
 
-Address of the Lido contract.
+- Mutator: `setDefaultMaxDelegateLimit(uint256 _defaultMaxDelegateLimit)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `defaultMaxDelegateLimit() returns(uint256)`
 
-- Accessor: `getLido() returns (address)`
+### Maximum operator delegate limit
 
-### Members list
+The maxim delegate limit per operator. This is different from the default maximum delegate limit. I can only be changed
+by the DAO.
 
-The list of oracle committee members.
+- Mutator: `setMaxDelegateLimit(uint256 _operatorId, uint256 _maxDelegateLimit)`
+  - Permission required: `DAO_ROLE`
 
-- Mutators: `addOracleMember(address)`, `removeOracleMember(address)`
-  - Permission required: `MANAGE_MEMBERS`
-- Accessor: `getOracleMembers() returns (address[])`
+### Set commission rate
 
-### The quorum
+The commission rate to be used to calculate commission during reward distribution to all node operators. It can only be
+called by the DAO. 
 
-The number of exactly the same reports needed to finalize the epoch.
+- Mutator: `setCommissionRate(uint256 _commissionRate)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `commissionRate() returns(uint256)`
 
-- Mutator: `setQuorum(uint256)`
-  - Permission required: `MANAGE_QUORUM`
-- Accessor: `getQuorum() returns (uint256)`
+### Update operator commission rate
 
-When the `quorum` number of the same reports is collected for the current epoch,
+The commission rate to be used to calculate commission during reward distribution to per node operators. It can only be
+called by the DAO.
 
-- the epoch is finalized (no more reports are accepted for it),
-- the final report is pushed to the Lido,
-- statistics collected and the [sanity check][1] is evaluated,
-- [beacon report receiver][2] is called.
+- Mutator: `updateOperatorCommissionRate(uint256 _operatorId, uint256 _newCommissionRate)`
+  - Permission required: `DAO_ROLE`
 
-### Sanity check
+### Set stake amount and fees
 
-To make oracles less dangerous, we can limit rewards report by 0.1% increase in stake and 15%
-decrease in stake, with both values configurable by the governance in case of extremely unusual
-circumstances.
+The DAO can set the stake amount and heimdall fees.
 
-- Mutators: `setAllowedBeaconBalanceAnnualRelativeIncrease(uint256)` and
-  `setAllowedBeaconBalanceRelativeDecrease(uint256)`
-  - Permission required: `SET_REPORT_BOUNDARIES`
-- Accessors: `getAllowedBeaconBalanceAnnualRelativeIncrease() returns (uint256)` and
-  `getAllowedBeaconBalanceRelativeDecrease() returns (uint256)`
+- Mutator: `setStakeAmountAndFees(uint256 _minAmountStake, uint256 _minHeimdallFees)`
+  - Permission required: `DAO_ROLE`
 
-### Beacon report receiver
+### Set restake
 
-It is possible to register a contract to be notified of the report push to Lido (when the quorum is
-reached). The contract should provide
-[IBeaconReportReceiver](https://github.com/lidofinance/lido-dao/blob/develop/contracts/0.4.24/interfaces/IBeaconReportReceiver.sol) interface.
+The DAO uses this function to determine whether a node operator can restake their rewards.
 
-- Mutator: `setBeaconReportReceiver(address)`
-  - Permission required: `SET_BEACON_REPORT_RECEIVER`
-- Accessor: `getBeaconReportReceiver() returns (address)`
+- Mutator: `setRestake(bool _restake)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `allowsRestake() returns(bool)`
 
-Note that setting zero address disables this functionality.
+### Set stmatic address
 
-### Current reporting status
+The DAO sets the stmatic contract address in the node operator registry contract. 
 
-For transparency we provide accessors to return status of the oracle daemons reporting for the
-current "[expected epoch][3]".
+- Mutator: `setStMATIC(address _stMATIC)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `stMATIC() returns(address)`
 
-- Accessors:
-  - `getCurrentOraclesReportStatus() returns (uint256)` - returns the current reporting bitmap,
-    representing oracles who have already pushed their version of report during the [expected][3]
-    epoch, every oracle bit corresponds to the index of the oracle in the current members list,
-  - `getCurrentReportVariantsSize() returns (uint256)` - returns the current reporting variants
-    array size,
-  - `getCurrentReportVariant(uint256 _index) returns (uint64 beaconBalance, uint32 beaconValidators, uint16 count)` - returns the current reporting array element with the given
-    index.
+### Set validator factory address
 
-### Expected epoch
+The DAO sets the validator factory contract address in the node operator registry contract.
 
-The oracle daemons may provide their reports only for the one epoch in every frame: the first
-one. The following accessor can be used to look up the current epoch that this contract expects
-reports.
+- Mutator: `setValidatorFactory(address _validatorFactory)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `validatorFactory() returns(address)`
 
-- Accessor: `getExpectedEpochId() returns (uint256)`.
+## Set stake manager address
 
-Note that any later epoch, that has already come _and_ is also the first epoch of its frame, is
-also eligible for reporting. If some oracle daemon reports it, the contract discards any results of
-this epoch and advances to the just reported one.
+The DAO sets the stake manager contract address in the node operator registry contract.
 
-### Version of the contract
+- Mutator: `setStakeManager(address _stakeManager)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `stakeManager() returns(address)`
 
-Returns the initialized version of this contract starting from 0.
+## Set stake manager address
 
-- Accessor: `getVersion() returns (uint256)`.
+The DAO sets the version of the node operator registry contract.
 
-### Beacon specification
+- Mutator: `setVersion(string memory _version)`
+  - Permission required: `DAO_ROLE`
+- Accessor: `version() returns(string memory)`
 
-Sets and queries configurable beacon chain specification.
+### Pausing
 
-- Mutator: `setBeaconSpec( uint64 _epochsPerFrame, uint64 _slotsPerEpoch, uint64 _secondsPerSlot, uint64 _genesisTime )`,
-  - Permission required: `SET_BEACON_SPEC`,
-- Accessor: `getBeaconSpec() returns (uint64 epochsPerFrame, uint64 slotsPerEpoch, uint64 secondsPerSlot, uint64 genesisTime)`.
+- Mutators: `togglePause()`
+  - Permission required: `DAO_ROLE`
+- Accessor: `paused() returns (bool)`
 
-### Current epoch
+When paused, `NodeOperatorRegistry` doesn't allow node operator addition, unstaking, or fee claiming.
+The following transactions revert:
 
-Returns the epoch calculated from current timestamp.
-
-- Accessor: `getCurrentEpochId() returns (uint256)`.
-
-### Supplemental epoch information
-
-Returns currently reportable epoch (the first epoch of the current frame) as well as its start and
-end times in seconds.
-
-- Accessor: `getCurrentFrame() returns (uint256 frameEpochId, uint256 frameStartTime, uint256 frameEndTime)`.
-
-### Last completed epoch
-
-Return the last epoch that has been pushed to Lido.
-
-- Accessor: `getLastCompletedEpochId() returns (uint256)`.
-
-### Supplemental rewards information
-
-Reports beacon balance and its change during the last frame.
-
-- Accessor: `getLastCompletedReportDelta() returns (uint256 postTotalPooledEther, uint256 preTotalPooledEther, uint256 timeElapsed)`.
-
-[1]: #sanity-check
-[2]: #beacon-report-receiver
-[3]: #expected-epoch
+- calls to `addOperator(string memory, address, bytes memory)`;
+- calls to `stopOperator(uint256)`;
+- calls to `removeOperator(uint256)`
+- calls to `joinOperator()`;
+- calls to `stake(uint256, uint256 )`
+- calls to `restake(uint256 , bool)`
+- calls to `unstake()`
+- calls to `migrate()`
+- calls to `unjail()`
