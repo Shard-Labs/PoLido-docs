@@ -61,7 +61,7 @@ function getContracts()
 ### getState()
 
 Returns the global state consisting of total number of node operators and number of operators that are: 
-inactive, active, stopped, unstaked, jailed, ejected, claimed, waiting and exited.
+inactive, active, stopped, unstaked, jailed, ejected, claimed and exited.
 
 ```sol
 function getState()
@@ -75,7 +75,6 @@ function getState()
             uint256 _totalStoppedNodeOperator,
             uint256 _totalUnstakedNodeOperator,
             uint256 _totalClaimedNodeOperator,
-            uint256 _totalWaitNodeOperator,
             uint256 _totalExitNodeOperator,
             uint256 _totalJailedNodeOperator,
             uint256 _totalEjectedNodeOperator
@@ -150,21 +149,6 @@ Returns an instance of the validator from the stake manager
 | `_operatorId`   | `uint256` | Id of the node operator |
 
 ## Methods
-
-### exitOperator()
-
-Changes the state from STOPPED to WAIT for the operator based on the given validator share address. This function can only 
-be called by the StMATIC contract.
-
-```sol
-function exitOperator(address _validatorShare) external override
-```
-
-#### Parameters:
-
-| Name      | Type      | Description                       |
-| --------- | --------- | --------------------------------- |
-| `_validatorShare`     | `address` | Address of the validator share             |
 
 ### removeOperator()
 

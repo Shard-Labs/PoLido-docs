@@ -8,9 +8,9 @@ correctness of validator operations.
 
 There are two possible scenarios for new Lido for Polygon node operators:
 
-1. Existing Polygon validator
+1. **Existing Polygon validator**
 
-2. Fresh (unstaked) Polygon validator
+2. **Fresh (unstaked) Polygon validator**
 
 The difference between the two is that existing Polygon validators already have some amount of MATIC tokens staked and 
 probably a significant amount of MATIC tokens delegated. They would not want to unstake, lose their validator slot and 
@@ -24,7 +24,7 @@ After being registered in the node operator registry, the node operator will cal
 protocol (as described below) and put the desired amount of tokens to stake (10 MATIC is minimum) + allocate the amount 
 for heimdall fees (minimum 20 MATIC).
 
-## Tutorial on How to join as an Operator during testnet phase
+## Tutorial on How to join as an Operator
 
 You can join as a Node Operator with an unstaked Validator node or with a pre-staked one.
 
@@ -135,8 +135,7 @@ Matic tokens and call the function stake from the address that owns the Operator
 ### Pre-staked (existing) Validator
 If you're joining with a pre-staked one, you should interact with `joinOperator` function in NodeOperatorRegistry 
 contract. Import INodeOperator interface to remix and attach it to the `NODE_OPERATOR_REGISTRY_PROXY` address. 
-After the voting process is over, the DAO will create a new operator for you by calling `addOperator`  (Shard Labs owns 
-the private key with DAO role during testnet phase).
+After the voting process is over, the DAO will create a new operator for you by calling `addOperator`.
 
 Next thing to do is to approve your NFT staking token to the newly created Operator. Call `getNodeOperator`
 function by interacting with the NodeOperatorRegistry to retrieve the address of the ValidatorProxy that was created. 
@@ -384,8 +383,8 @@ as a NodeOperator:
 
 Note:: Deployment addresses can be retrieved from the table below
 
-| Mainnet    | Testnet   | Description        |
-| ---------- | --------- | ------------------ |
-| ` `        | `0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a `       | Node Operator Registry Proxy   |
-| ` `        | `0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7 `       | NFT Contract Address   |
+| Description          | Mainnet    | Testnet    |
+| -------------------- | --------- | ------------------ |
+| Node Operator Registry Proxy   | `0x797C1369e578172112526dfcD0D5f9182067c928`        | `0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a `       |
+| NFT Contract Address   | `0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F`        | `0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7 `       |
 
