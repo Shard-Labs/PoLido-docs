@@ -1,6 +1,7 @@
 module.exports = {
   docs: [
     'overview',
+    'administration',
     'architecture',
     'how-lido-for-polygon-works',
     'fees',
