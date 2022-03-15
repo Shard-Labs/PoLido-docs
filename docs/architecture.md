@@ -6,7 +6,7 @@ The Lido for Polygon architecture has 3 main parts:
 - **PoLidoNFT contract**
 - **NodeOperator contract**
 
-  ![archi-resized](https://user-images.githubusercontent.com/17001801/154430912-49b66eea-6a77-45b7-ad80-da18ef44326e.jpeg)
+  ![archi-resized](../static/img/architecture/arch-01.jpeg)
 
 
 ### StMatic contract
@@ -360,4 +360,4 @@ The validator Factory is used to deploy new validatorProxy that is later added t
 
 ### Sequence Diagram of Operators Lifecycle
 
-![squence-diagram](https://user-images.githubusercontent.com/17001801/154485063-7829e045-9e56-49be-9a7c-3fce30624387.png)
+![squence-diagram](../static/img/architecture/arch-02.jpeg)

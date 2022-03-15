@@ -5,8 +5,8 @@
 ## Mainnet
 
 ### Deployers and Upgraders
-- Root Deployer: `0x59d07dc34B135B17b87840a86BFF7302039E7EDf`,
-- Child Deployer: `0x59d07dc34B135B17b87840a86BFF7302039E7EDf`,
+- Root Deployer: `0x59d07dc34B135B17b87840a86BFF7302039E7EDf`
+- Child Deployer: `0x59d07dc34B135B17b87840a86BFF7302039E7EDf`
 - Multisig Upgrader: `0xd65Fa54F8DF43064dfd8dDF223A446fc638800A9`
 
 ### Core Protocol
@@ -31,14 +31,14 @@
 - Validator Implementation: [`0x7DB7d8Be39B6bb07115445b5eBaa7B8345D6B2F6`](https://etherscan.io/address/0x7DB7d8Be39B6bb07115445b5eBaa7B8345D6B2F6)
 
 ### Liquidity pools
-- Balancer wstETH/WETH pool: [`0x32296969Ef14EB0c6d29669C550D4a0449130230`](https://etherscan.io/address/0x32296969Ef14EB0c6d29669C550D4a0449130230) (pool id: `0x32296969ef14eb0c6d29669c550d4a0449130230000200000000000000000080`)
+- Balancer stMATIC/MATIC pool (Polygon): [`0x32296969Ef14EB0c6d29669C550D4a0449130230`](https://polygonscan.com/address/0xaF5E0B5425dE1F5a630A8cB5AA9D97B8141C908D)(pool id: `0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366`)
 
 
-### Goerli
+## Goerli
 
 ### Deployers and Upgraders
-- Root Deployer: `0x3E46BEFDA7112d8954b923ea6bd9f07c2e615e10`,
-- Child Deployer: `0x3E46BEFDA7112d8954b923ea6bd9f07c2e615e10`,
+- Root Deployer: `0x3E46BEFDA7112d8954b923ea6bd9f07c2e615e10`
+- Child Deployer: `0x3E46BEFDA7112d8954b923ea6bd9f07c2e615e10`
 - Multisig Upgrader: ``
 
 

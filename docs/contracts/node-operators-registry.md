@@ -154,9 +154,9 @@ Returns an instance of the validator from the stake manager
 
 Removes the node operator with given id. It requires operator status equal to be EXIT.
 
-:::note
-This method can be called by REMOVE_OPERATOR_ROLE-only role.
-:::
+
+> **Note:** This method can be called by REMOVE_OPERATOR_ROLE-only role.
+
 
 ```sol
 function removeOperator(uint256 _operatorId)
@@ -225,9 +225,9 @@ function setOperatorRewardAddress(address _rewardAddress)
 | `_rewardAddress` | `address` | New reward address |
 
 ### togglePause()
-:::note
-This method can only be called by a pause operator role.
-:::
+
+> **Note:** This method can only be called by a pause operator role.
+
 
 Allows an authorized user to pause the contract. 
 
@@ -235,9 +235,9 @@ Allows an authorized user to pause the contract.
 function togglePause() userHasRole(PAUSE_OPERATOR_ROLE) external
 ```
 ## Operator Owner Methods
-:::note
-These methods can only be called by an operator owner.
-:::
+
+> **Note:** These methods can only be called by an operator owner.
+
 
 ### joinOperator()
 
@@ -356,9 +356,9 @@ function unstakeClaim() external override
 ```
 
 ## DAO Methods
-:::note
-These methods can be called by DAO-only roles.
-:::
+
+> **Note:** These methods can be called by DAO-only roles.
+
 
 ### addOperator()
 
@@ -552,9 +552,9 @@ function setStakeManager(address _stakeManager)
 
 
 ### setVersion()
-:::note
-This method can be called by DEFAULT_ADMIN_ROLE-only role.
-:::
+
+> **Note:** This method can be called by DEFAULT_ADMIN_ROLE-only role.
+
 
 Allows the DAO to set the version of the contract address.
 

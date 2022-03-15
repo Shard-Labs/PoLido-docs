@@ -18,9 +18,9 @@ A good middle ground between these two extremes is a multi-sig, a program that e
 ## Multisig details
 
 For Lido for Polygon, we use the [gnosis-safe](https://gnosis-safe.io/app/), and we require approval from 3 out of 5 members. The members are:
-1. Shard Labs
-2. Lido
-3. Polygon
+1. **Shard Labs:** `Jakov`
+2. **Lido:** `Vasiliy, Victor`
+3. **Polygon:** `Hamzah, Aishwary`
 
 The addresses of the multi-sig members are listed on the [deployments](https://github.com/Shard-Labs/PoLido/blob/main/mainnet-deployment-info.json#L3) page. The multi-sig instance is used both as the upgrade authority of the program and as the manager of the Lido for Polygon instance.
 

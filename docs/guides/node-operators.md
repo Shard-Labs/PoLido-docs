@@ -6,6 +6,12 @@ and stable infrastructure for running Polygon validator infrastructure for the b
 They are professional staking providers who can ensure the safety of funds belonging to the protocol users and 
 correctness of validator operations.
 
+> **Note:**
+> - The Mainnet NodeOperatorRegistry Proxy address can be retrieved from [here](https://github.com/Shard-Labs/PoLido/blob/main/mainnet-deployment-info.json).
+> - The Goerli NodeOperatorRegistry Proxy address can be retrieved from [here](https://github.com/Shard-Labs/PoLido/blob/main/testnet-deployment-info.json).
+> - The Mainnet StakingNFT Contract Address Proxy address can be retrieved from [here](https://static.matic.network/network/mainnet/v1/index.json)
+> - The Testnet StakingNFT Contract Address Proxy address can be retrieved from [here](https://static.matic.network/network/testnet/mumbai/index.json)
+
 There are two possible scenarios for new Lido for Polygon node operators:
 
 1. **Existing Polygon validator**
@@ -380,11 +386,3 @@ as a NodeOperator:
       ![154491968](https://user-images.githubusercontent.com/17001801/156926923-eba66e07-3414-4fb1-820b-b5e27bee9959.jpg)
 
       click on `migrate` to migrate the node operator from the node manager.
-
-Note:: Deployment addresses can be retrieved from the table below
-
-| Description          | Mainnet    | Testnet    |
-| -------------------- | --------- | ------------------ |
-| Node Operator Registry Proxy   | `0x797C1369e578172112526dfcD0D5f9182067c928`        | `0xb1f3f45360Cf0A30793e38C18dfefCD0d5136f9a `       |
-| NFT Contract Address   | `0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F`        | `0x532c7020E0F3666f9440B8B9d899A9763BCc5dB7 `       |
-

@@ -10,8 +10,7 @@ module.exports = {
       label: 'Guides',
       items: [
         'guides/node-operators',
-        'guides/protocol-levers',
-        'guides/etherscan-voting',
+        'guides/protocol-levers'
       ],
     },
     {
@@ -23,6 +22,6 @@ module.exports = {
       ],
     },
     'deployed-contracts',
-    'faq'
+    'faq-node-operators'
   ],
 }

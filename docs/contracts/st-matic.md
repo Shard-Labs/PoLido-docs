@@ -147,14 +147,11 @@ Moves `_amount` tokens from the caller's account to the `_recipient` account.
 function transfer(address _recipient, uint256 _amount) returns (bool)
 ```
 
-:::note
-Requirements:
-
-- `_recipient` cannot be the zero address.
-- the caller must have a balance of at least `_amount`.
-- the contract must not be paused.
-
-:::
+> **Note:**
+> Requirements:
+> - `_recipient` cannot be the zero address.
+> - the caller must have a balance of at least `_amount`.
+> - the contract must not be paused.
 
 #### Parameters:
 
@@ -176,9 +173,7 @@ on behalf of `_owner` through `transferFrom`. This is zero by default.
 function allowance(address _owner, address _spender) returns (uint256)
 ```
 
-:::note
-This value changes when `approve` or `transferFrom` is called.
-:::
+> **Note:** This value changes when `approve` or `transferFrom` is called.
 
 #### Parameters:
 
@@ -195,13 +190,10 @@ Sets `_amount` as the allowance of `_spender` over the caller's tokens
 function approve(address _spender, uint256 _amount) returns (bool)
 ```
 
-:::note
-Requirements:
-
-- `_spender` cannot be the zero address.
-- the contract must not be paused.
-
-:::
+> **Note:**
+> Requirements:
+> `_spender` cannot be the zero address.
+> the contract must not be paused.
 
 #### Parameters:
 
@@ -228,16 +220,13 @@ function transferFrom(
 ) returns (bool)
 ```
 
-:::note
 
-Requirements:
-
-- `_sender` and `_recipient` cannot be the zero addresses.
-- `_sender` must have a balance of at least `_amount`.
-- the caller must have allowance for `_sender`'s tokens of at least `_amount`.
-- the contract must not be paused.
-
-:::
+> **Note:**
+> Requirements:
+> - `_sender` and `_recipient` cannot be the zero addresses.
+> - `_sender` must have a balance of at least `_amount`.
+> - the caller must have allowance for `_sender`'s tokens of at least `_amount`.
+> - the contract must not be paused.
 
 #### Parameters:
 
@@ -261,14 +250,11 @@ This is an alternative to `approve` that can be used as a mitigation for problem
 function increaseAllowance(address _spender, uint256 _addedValue) returns (bool)
 ```
 
-:::note
 
-Requirements:
-
-- `_spender` cannot be the the zero address.
-- the contract must not be paused.
-
-:::
+> **Note:**
+> Requirements:
+> - `_spender` cannot be the the zero address.
+> - the contract must not be paused.
 
 #### Parameters:
 
@@ -292,14 +278,11 @@ problems described [here](https://github.com/OpenZeppelin/openzeppelin-contracts
 function decreaseAllowance(address _spender, uint256 _subtractedValue) returns (bool)
 ```
 
-:::note
-Requirements:
-
-- `_spender` cannot be the zero address.
-- `_spender` must have allowance for the caller of at least `_subtractedValue`.
-- the contract must not be paused.
-
-:::
+> **Note:**
+> Requirements:
+> - `_spender` cannot be the zero address.
+> - `_spender` must have allowance for the caller of at least `_subtractedValue`.
+> - the contract must not be paused.
 
 #### Parameters:
 
@@ -402,9 +385,8 @@ function claimTokens2StMatic(uint256 _tokenId)
 
 
 ## DAO Methods
-:::note
-These methods can be called by DAO-only roles
-:::
+
+> **Note:** These methods can be called by DAO-only roles
 
 ### setFees()
 Set the DAO, operator, and insurance fee.
@@ -546,9 +528,8 @@ function setVersion(string calldata _version) onlyRole(DEFAULT_ADMIN_ROLE)
 
 ---
 ## Admin Methods
-:::note
-This method can be called by ADMIN-only roles
-:::
+
+> **Note:** This method can be called by ADMIN-only roles
 
 ### togglePause()
 Allows the admin pause and unpause the contract
