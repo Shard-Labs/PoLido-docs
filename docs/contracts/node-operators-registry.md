@@ -1,170 +1,168 @@
 # NodeOperatorsRegistry
+- [Source Code](https://github.com/Shard-Labs/PoLido/blob/main/contracts/NodeOperatorRegistry.sol)
 
-- [Source Code](https://github.com/lidofinance/lido-dao/blob/master/contracts/0.4.24/nos/NodeOperatorsRegistry.sol)
-- [Deployed Contract](https://etherscan.io/address/0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5)
-
-Node Operators act as validators on the Beacon chain for the benefit of the protocol. The DAO selects node operators and adds their addresses to the NodeOperatorsRegistry contract. Authorized operators have to generate a set of keys for the validation and also provide them with the smart contract. As Ether is received from users, it is distributed in chunks of 32 Ether between all active Node Operators. The contract contains a list of operators, their keys, and the logic for distributing rewards between them. The DAO can deactivate misbehaving operators.
+The NodeOperatorRegistry contract is the core contract that allows node operators to participate in the Lido staking
+protocol. Node Operators participate on the protocol as validators and get rewarded for their work. A Node Operator gets 
+added to the Registry by the DAO. Validator reward is distributed evenly amongst all active operators. 
+The contract contains a list of operators, their public keys, and the logic for managing their state.
 
 ## View Methods
 
-### getRewardsDistribution()
-
-Returns the rewards distribution proportional to the effective stake for each node operator
-
-```sol
-function getRewardsDistribution(uint256 _totalRewardShares) returns (
-  address[] recipients,
-  uint256[] shares
-)
-```
-
-#### Parameters:
-
-| Name                 | Type      | Description                                 |
-| -------------------- | --------- | ------------------------------------------- |
-| `_totalRewardShares` | `uint256` | Total amount of reward shares to distribute |
-
-### getActiveNodeOperatorsCount()
-
-Returns number of active node operators
-
-```sol
-function getActiveNodeOperatorsCount() returns (uint256)
-```
-
 ### getNodeOperator()
 
-Returns the n-th node operator
+Returns the node operator based on the owners address.
 
 ```sol
-function getNodeOperator(uint256 _id, bool _fullInfo) returns (
-    bool active,
-    string name,
-    address rewardAddress,
-    uint64 stakingLimit,
-    uint64 stoppedValidators,
-    uint64 totalSigningKeys,
-    uint64 usedSigningKeys
-)
+function getNodeOperator(address _owner)
+        external
+        view
+        returns (NodeOperator memory)
 ```
-
 #### Parameters:
 
 | Name        | Type      | Description                            |
 | ----------- | --------- | -------------------------------------- |
-| `_id`       | `uint256` | Node Operator id                       |
-| `_fullInfo` | `bool`    | If true, name will be returned as well |
+| `_owner`    | `address` | Address of the node operator owner     |
 
-### getTotalSigningKeyCount()
+### getNodeOperator()
 
-Returns total number of signing keys of the node operator
+Returns the node operator based on the operators id.
 
 ```sol
-function getTotalSigningKeyCount(uint256 _operator_id) returns (uint256)
+function getNodeOperator(uint256 _operatorId)
+        external
+        view
+        returns (NodeOperator memory)
+```
+#### Parameters:
+
+| Name         | Type      | Description                            |
+| -----------  | --------- | -------------------------------------- |
+| `_operatorId`| `uint256` | Id of the operator                     |
+
+
+### getContracts()
+
+Returns the addresses of ValidatorFactory, StakeManager, PolygonERC20 and StMATIC contracts.
+
+```sol
+function getContracts()
+        external
+        view
+        override
+        returns (
+            address _validatorFactory,
+            address _stakeManager,
+            address _polygonERC20,
+            address _stMATIC
+        )
+```
+
+### getState()
+
+Returns the global state consisting of total number of node operators and number of operators that are: 
+inactive, active, stopped, unstaked, jailed, ejected, claimed and exited.
+
+```sol
+function getState()
+        external
+        view
+        override
+        returns (
+            uint256 _totalNodeOperator,
+            uint256 _totalInactiveNodeOperator,
+            uint256 _totalActiveNodeOperator,
+            uint256 _totalStoppedNodeOperator,
+            uint256 _totalUnstakedNodeOperator,
+            uint256 _totalClaimedNodeOperator,
+            uint256 _totalExitNodeOperator,
+            uint256 _totalJailedNodeOperator,
+            uint256 _totalEjectedNodeOperator
+        )
+```
+
+### getOperatorIds()
+
+Returns an array consisting of the operator ids.
+
+```sol
+function getOperatorIds()
+        external
+        view
+        override
+        returns (uint256[] memory)
+    {
+        return operatorIds;
+    }
+```
+
+
+### getOperatorInfos()
+Returns an OperatorInfo array of all the operators that are active, or include jailed and ejected if _allActive is 
+set to true.
+
+```sol
+function getOperatorInfos(bool _withdrawRewards, bool _delegation, bool _allActive)
+        external
+        view
+        override
+        returns (OperatorInfo[] memory)
+```
+#### Parameters:
+
+| Name            | Type      | Description                                                         |
+| --------------  | --------- | ----------------------------------                                  |
+| `_withdrawRewards`   | `bool`    | If true, check if operator accumulated min rewards. |
+| `_delegation`   | `bool`    | If true, return all operators that delegation is set to true. |
+| `_allActive`   | `bool`    | If true, return all operators with ACTIVE, EJECTED, JAILED. |
+
+### getValidatorShare()
+Returns a validator share address
+
+```sol
+  function getValidatorShare(uint256 _operatorId)
+        external
+        view
+        returns (address)
 ```
 
 #### Parameters:
 
-| Name           | Type      | Description      |
-| -------------- | --------- | ---------------- |
-| `_operator_id` | `uint256` | Node Operator id |
+| Name            | Type      | Description                                                         |
+| --------------  | --------- | ----------------------------------                                  |
+| `_operatorId`   | `uint256` | Id of the node operator |
 
-### getUnusedSigningKeyCount()
-
-Returns number of usable signing keys of the node operator
+### getValidator()
+Returns an instance of the validator from the stake manager
 
 ```sol
-function getUnusedSigningKeyCount(uint256 _operator_id) returns (uint256)
+  function getValidator(uint256 _operatorId)
+        external
+        view
+        returns (Validator memory va)
 ```
 
 #### Parameters:
 
-| Name           | Type      | Description      |
-| -------------- | --------- | ---------------- |
-| `_operator_id` | `uint256` | Node Operator id |
-
-### getSigningKey()
-
-Returns n-th signing key of the node operator
-
-```sol
-function getSigningKey(uint256 _operator_id, uint256 _index) returns (
-  bytes key,
-  bytes depositSignature,
-  bool used
-)
-```
-
-#### Parameters:
-
-| Name           | Type      | Description                        |
-| -------------- | --------- | ---------------------------------- |
-| `_operator_id` | `uint256` | Node Operator id                   |
-| `_index`       | `uint256` | Index of the key, starting with 0d |
-
-#### Returns:
-
-| Name               | Type    | Description                                           |
-| ------------------ | ------- | ----------------------------------------------------- |
-| `key`              | `bytes` | Key                                                   |
-| `depositSignature` | `bytes` | Signature needed for a `depositContract.deposit` call |
-| `used`             | `bool`  | Flag indication if the key was used in the staking    |
-
-### getNodeOperatorsCount()
-
-Returns total number of node operators
-
-```sol
-function getNodeOperatorsCount() returns (uint256)
-```
-
-### getKeysOpIndex()
-Returns a monotonically increasing counter that gets incremented when any of the following happens:
-1. a Node Operator's key(s) is added
-2. a Node Operator's key(s) is removed
-3. a Node Operator's approved keys limit is changed
-4. a Node Operator was activated/deactivated
-
-```sol
-function getKeysOpIndex() public view returns (uint256)
-```
+| Name            | Type      | Description                                                         |
+| --------------  | --------- | ----------------------------------                                  |
+| `_operatorId`   | `uint256` | Id of the node operator |
 
 ## Methods
 
-### addNodeOperator()
+### removeOperator()
 
-Add node operator named `_name` with reward address `_rewardAddress` and staking limit = 0
+Removes the node operator with given id. It requires operator status equal to be EXIT.
 
-```sol
-function addNodeOperator(
-  string _name,
-  address _rewardAddress
-) returns (uint256 id)
-```
 
-#### Parameters:
+> **Note:** This method can be called by REMOVE_OPERATOR_ROLE-only role.
 
-| Name             | Type      | Description                                                       |
-| ---------------- | --------- | ----------------------------------------------------------------- |
-| `_name`          | `string`  | Human-readable name                                               |
-| `_rewardAddress` | `address` | Ethereum 1 address which receives stETH rewards for this operator |
-
-#### Returns:
-
-| Name | Type      | Description                        |
-| ---- | --------- | ---------------------------------- |
-| `id` | `uint256` | A unique key of the added operator |
-
-### setNodeOperatorActive()
-
-Activate or disable node operator with given id
-
-:::note
-Increases the keysOpIndex
-:::
 
 ```sol
-function setNodeOperatorActive(uint256 _id, bool _active)
+function removeOperator(uint256 _operatorId)
+        external
+        override
+        userHasRole(REMOVE_OPERATOR_ROLE)
 ```
 
 #### Parameters:
@@ -172,247 +170,402 @@ function setNodeOperatorActive(uint256 _id, bool _active)
 | Name      | Type      | Description                       |
 | --------- | --------- | --------------------------------- |
 | `_id`     | `uint256` | Node Operator id                  |
-| `_active` | `bool`    | Activate or disable node operator |
 
-### setNodeOperatorName()
 
-Change human-readable name of the node operator `_id` to `_name`
+### unstake()
+
+It allows the operator owner to unstake their operator from the Polygon stakeManager contract. 
+It requires operator status equal to ACTIVE or EJECTED.
 
 ```sol
-function setNodeOperatorName(uint256 _id, string _name)
+function unstake() external override
 ```
 
+### migrate()
+
+Migrates the validator ownership to reward address
+
+```sol
+function migrate() external override
+```
+
+### claimFee()
+
+Withdraws the Heimdall fees.
+
+```sol
+function claimFee(
+        uint256 _accumFeeAmount,
+        uint256 _index,
+        bytes memory _proof
+    ) external override
+```
 #### Parameters:
 
 | Name    | Type      | Description         |
 | ------- | --------- | ------------------- |
-| `_id`   | `uint256` | Node Operator id    |
-| `_name` | `string`  | Human-readable name |
+| `_accumFeeAmount`   | `uint256` | Amount of Heimdall fees in Matic that will be withdrawn   |
+| `_index`   | `uint256` | Index of the Validator   |
+| `_proof`   | `bytes` | Proof for the Stake manager  |
 
-### setNodeOperatorRewardAddress()
 
-Change reward address of the node operator `_id` to `_rewardAddress`
+### setOperatorRewardAddress()
+
+Allows operator's owner to update reward address
 
 ```sol
-function setNodeOperatorRewardAddress(uint256 _id, address _rewardAddress)
+function setOperatorRewardAddress(address _rewardAddress)
+        external
 ```
 
 #### Parameters:
 
 | Name             | Type      | Description        |
 | ---------------- | --------- | ------------------ |
-| `_id`            | `uint256` | Node Operator id   |
 | `_rewardAddress` | `address` | New reward address |
 
-### setNodeOperatorStakingLimit()
+### togglePause()
 
-Set the maximum number of validators to stake for the node operator `_id` to `_stakingLimit`
+> **Note:** This method can only be called by a pause operator role.
+
+
+Allows an authorized user to pause the contract. 
+
+```solidity
+function togglePause() userHasRole(PAUSE_OPERATOR_ROLE) external
+```
+## Operator Owner Methods
+
+> **Note:** These methods can only be called by an operator owner.
+
+
+### joinOperator()
+
+Adds a validator that was already staked on the polygon stake manager to the PoLido protocol.
+It requires operator status equal to be ACTIVE. Callable only by the owner.
 
 ```sol
-function setNodeOperatorStakingLimit(uint256 _id, uint64 _stakingLimit)
+function joinOperator() external override
 ```
 
-:::note
-Increases the keysOpIndex
-:::
+### stake()
 
+Stakes a validator on the Polygon stakeManager contract. The user has first to approve the amount + _heimdallFee to the
+validatorProxy. It requires operator status to be INACTIVE. Callable only by the owner.
+
+```sol
+function stake(uint256 _amount, uint256 _heimdallFee)
+```
+
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_amount`   | `uint256` | Amount to stake   |
+| `_heimdallFee` | `uint256`  | Heimdall fee |
+
+### restake()
+
+Restakes Matic add/or accumulated rewards on the stake manager.
+The user has first to approve the amount to the validatorProxy.
+It requires operator status to be ACTIVE. Callable only by the owner.
+
+```sol
+function restake(uint256 _amount, bool _restakeRewards)
+        external
+        override
+```
+
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_amount`   | `uint256` | Amount to stake   |
+| `_restakeRewards` | `bool`  | If true, the rewards will also be restaked |
+
+### unjail()
+
+Unjails the validator and turns its status from UNSTAKED to ACTIVE. Callable only by the owner.
+
+```sol
+function unjail() external override
+```
+
+### setOperatorName()
+
+Updates the operator name. Callable only by the owner.
+
+```sol
+function setOperatorName(string memory _name)
+        external
+        override
+```
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_name`   | `string` | New operator name  |
+
+### withdrawRewards()
+
+Withdraws staking rewards accumulated by a validator and transfers the amount to the operator's owner.
+Callable only by the owner.
+
+```sol
+function withdrawRewards() external override
+```
+
+### updateSigner()
+
+Updates the operators public key. Callable only by the owner.
+
+```sol
+function updateSigner(bytes memory _signerPubkey)
+        external
+        override
+```
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_signerPubKey`   | `bytes` | New public key used for signing on Heimdall  |
+
+### topUpFee()
+
+Tops up heimdall fees. Callable only by the owner.
+
+```sol
+function topUpForFee(uint256 _heimdallFee)
+        external
+        override
+```
+
+#### Parameters:
+
+| Name    | Type      | Description         |
+| ------- | --------- | ------------------- |
+| `_heimdallFee`   | `uint256` | Amount of Matic that will be added to the current heimdallFee provided   |
+
+### unstakeClaim()
+
+Begins the unstaking process of the staked tokens. Tokens will be unstaked after the withdraw delay has passed.
+Callable only by the owner.
+
+```sol
+function unstakeClaim() external override
+```
+
+## DAO Methods
+
+> **Note:** These methods can be called by DAO-only roles.
+
+
+### addOperator()
+
+Allows the DAO to add node operator named `_name` with reward address `_rewardAddress` and signer (heimdall) 
+public key `_signerPubkey`
+
+```sol
+function addOperator(
+        string memory _name,
+        address _rewardAddress,
+        bytes memory _signerPubkey
+    )
+        external
+        override
+        userHasRole(DAO_ROLE)
+```
+
+#### Parameters:
+
+| Name             | Type      | Description                                                       |
+| ---------------- | --------- | ----------------------------------------------------------------- |
+| `_name`          | `string`  | Human-readable name                                               |
+| `_rewardAddress` | `address` | Goerli address which receives stMATIC rewards for this operator   |
+| `_signerPubKey`  | `bytes`   | Public key used on heimdall that is 64 bytes long.                |
+
+### stopOperator()
+
+Allows the DAO to disable the node operator with given id. It requires operator status equal to be ACTIVE or INACTIVE
+
+```sol
+function stopOperator(uint256 _operatorId)
+        external
+        override
+        userHasRole(DAO_ROLE)
+
+```
+
+#### Parameters:
+
+| Name      | Type      | Description                       |
+| --------- | --------- | --------------------------------- |
+| `_id`     | `uint256` | Node Operator id                  |
+
+### setDefaultMaxDelegateLimit()
+
+Allows the DAO to set the operator defaultMaxDelegateLimit.
+
+```sol
+function setDefaultMaxDelegateLimit(uint256 _defaultMaxDelegateLimit)
+        external
+        userHasRole(DAO_ROLE)
+```
 #### Parameters:
 
 | Name            | Type      | Description                       |
 | --------------- | --------- | --------------------------------- |
-| `_id`           | `uint256` | Node Operator id                  |
-| `_stakingLimit` | `address` | Max number of validators to stake |
+| `_defaultMaxDelegateLimit`           | `uint256` | Default Max Delegate Limit                 |
 
-### reportStoppedValidators()
 
-Report `_stoppedIncrement` more stopped validators of the node operator `_id`
+### setMaxDelegateLimit()
+Allows the DAO to set the operator maxDelegateLimit.
 
 ```sol
-function reportStoppedValidators(uint256 _id, uint64 _stoppedIncrement)
+function setMaxDelegateLimit(uint256 _operatorId, uint256 _maxDelegateLimit)
+        external
+        userHasRole(DAO_ROLE)
 ```
 
 #### Parameters:
 
 | Name                | Type      | Description                              |
 | ------------------- | --------- | ---------------------------------------- |
-| `_id`               | `uint256` | Node Operator id                         |
-| `_stoppedIncrement` | `uint64`  | Count of stopped validators to increment |
+| `_operatorId`               | `uint256` | Node Operator id                         |
+| `_maxDelegateLimit` | `uint256`  | Maximum delegate limit |
 
-### trimUnusedKeys()
+### setCommissionRate()
 
-Remove unused signing keys
-
-```sol
-function trimUnusedKeys()
-```
-
-:::note
-Function is used by the Lido contract
-:::
-
-### addSigningKeys()
-
-Add `_quantity` validator signing keys of operator `_id` to the set of usable keys.
-Concatenated keys are: `_pubkeys`.
-Can be done by the DAO in question by using the designated rewards address.
-
-:::note
-Increases the keysOpIndex
-:::
+Allows the DAO to set the commission rate used.
 
 ```sol
-function addSigningKeys(
-  uint256 _operator_id,
-  uint256 _quantity,
-  bytes _pubkeys,
-  bytes _signatures
-)
+function setCommissionRate(uint256 _commissionRate)
+        external
+        userHasRole(DAO_ROLE)
 ```
+#### Parameters:
 
-:::note
-Along with each key the DAO has to provide a signatures for the
-(pubkey, withdrawal_credentials, 32000000000) message.
+| Name                | Type      | Description                              |
+| ------------------- | --------- | ---------------------------------------- |
+| `_commissionRate`               | `uint256` | Commission rate                         |
 
-Given that information, the contract'll be able to call
-`depositContract.deposit` on-chain.
-:::
+
+### updateOperatorCommissionRate()
+
+Allows the DAO to update commission rate for an operator.
+
+```sol
+function updateOperatorCommissionRate(
+        uint256 _operatorId,
+        uint256 _newCommissionRate
+    ) external userHasRole(DAO_ROLE)
+```
 
 #### Parameters:
 
 | Name           | Type      | Description                                                                                |
 | -------------- | --------- | ------------------------------------------------------------------------------------------ |
 | `_operator_id` | `uint256` | Node Operator id                                                                           |
-| `_quantity`    | `uint64`  | Number of signing keys provided                                                            |
-| `_pubkeys`     | `bytes`   | Several concatenated validator signing keys                                                |
-| `_signatures`  | `bytes`   | Several concatenated signatures for (pubkey, withdrawal_credentials, 32000000000) messages |
+| `_newCommissionRate`    | `uint256`  | New commission rate                                                           |
 
-### addSigningKeysOperatorBH()
 
-Add `_quantity` validator signing keys of operator `_id` to the set of usable keys.
-Concatenated keys are: `_pubkeys`.
-Can be done by node operator in question by using the designated rewards address.
+### setStakeAmountAndFees()
+
+Allows the DAO to update the stake amount and heimdall fees
 
 ```sol
-function addSigningKeysOperatorBH(
-  uint256 _operator_id,
-  uint256 _quantity,
-  bytes _pubkeys,
-  bytes _signatures
-)
+function setStakeAmountAndFees(
+        uint256 _minAmountStake,
+        uint256 _minHeimdallFees
+    )
+        external
+        userHasRole(DAO_ROLE)
 ```
-
-:::note
-Along with each key the DAO has to provide a signatures for the
-(pubkey, withdrawal_credentials, 32000000000) message.
-
-Given that information, the contract'll be able to call
-`depositContract.deposit` on-chain.
-:::
 
 #### Parameters:
 
 | Name           | Type      | Description                                                                                |
 | -------------- | --------- | ------------------------------------------------------------------------------------------ |
-| `_operator_id` | `uint256` | Node Operator id                                                                           |
-| `_quantity`    | `uint64`  | Number of signing keys provided                                                            |
-| `_pubkeys`     | `bytes`   | Several concatenated validator signing keys                                                |
-| `_signatures`  | `bytes`   | Several concatenated signatures for (pubkey, withdrawal_credentials, 32000000000) messages |
+| `_minAmountStake` | `uint256` | Minimum amount stake                                                                          |
+| `_minHeimdallFees`    | `uint256`  | Minimum heimdall fees                                                          |
 
-### removeSigningKey()
 
-Removes a validator signing key #`_index` of operator #`_id` from the set of usable keys. Executed on behalf of DAO.
-
-:::note
-Increases the keysOpIndex
-:::
-
-```sol
-function removeSigningKey(uint256 _operator_id, uint256 _index)
-```
-
-#### Parameters:
-
-| Name           | Type      | Description                       |
-| -------------- | --------- | --------------------------------- |
-| `_operator_id` | `uint256` | Node Operator id                  |
-| `_index`       | `uint256` | Index of the key, starting with 0 |
-
-### removeSigningKeys()
-Removes an #`_amount` of validator signing keys starting from #`_index` of operator #`_id` usable keys. Executed on behalf of DAO.
-
-Keys removing from the last index to the highest one, so we won't get outside the array
-
-:::note
-Increases the keysOpIndex
-:::
-
+### setRestake()
+Allows the DAO to toggle restake.
 ```sol 
-function removeSigningKeys(uint256 _operator_id, uint256 _index, uint256 _amount)
+function setRestake(bool _restake) external override userHasRole(DAO_ROLE)
 ```
 
 #### Parameters:
 
 | Name           | Type      | Description                       |
 | -------------- | --------- | --------------------------------- |
-| `_operator_id` | `uint256` | Node Operator id                  |
-| `_index`       | `uint256` | Index of the key, starting with 0 |
-| `_amount`      | `uint256` | Amount of keys                    |
+| `_restake` | `bool` | Restake toggle                |
 
-### removeSigningKeyOperatorBH()
 
-Removes a validator signing key `_index` of operator `_id` from the set of usable keys. Executed on behalf of Node Operator.
+### setStMATIC()
+Allows the DAO to set the StMATIC contract address.
 
 ```sol
-function removeSigningKeyOperatorBH(uint256 _operator_id, uint256 _index)
+function setStMATIC(address _stMATIC)
+        external
+        userHasRole(DAO_ROLE)
 ```
 
 #### Parameters:
 
 | Name           | Type      | Description                       |
 | -------------- | --------- | --------------------------------- |
-| `_operator_id` | `uint256` | Node Operator id                  |
-| `_index`       | `uint256` | Index of the key, starting with 0 |
+| `_stMATIC` | `address` | New stMATIC address               |
 
-### removeSigningKeysOperatorBH()
 
-Removes an #`_amount` of validator signing keys starting from #`_index` of operator #`_id` usable keys. Executed on behalf of Node Operator.
-
-Keys removing from the last index to the highest one, so we won't get outside the array
+### setValidatorFactory()
+Allows the DAO to set the validator factory contract address.
 
 ```sol
-function removeSigningKeysOperatorBH(uint256 _operator_id, uint256 _index, uint256 _amount)
+function setValidatorFactory(address _validatorFactory)
+        external
+        userHasRole(DAO_ROLE)
 ```
 
 #### Parameters:
 
 | Name           | Type      | Description                       |
 | -------------- | --------- | --------------------------------- |
-| `_operator_id` | `uint256` | Node Operator id                  |
-| `_index`       | `uint256` | Index of the key, starting with 0 |
-| `_amount`      | `uint256` | Amount of keys                    |
+| `_validatorFactory` | `address` | New validator factory address                |
 
-### assignNextSigningKeys()
 
-Selects and returns at most `_numKeys` signing keys (as well as the corresponding
-signatures) from the set of active keys and marks the selected keys as used.
-May only be called by the Lido contract.
+### setStakeManager()
+Allows the DAO to set the stake manager contract address.
 
 ```sol
-function assignNextSigningKeys(uint256 _numKeys) returns (
-  bytes memory pubkeys,
-  bytes memory signatures
-)
+function setStakeManager(address _stakeManager)
+        external
+        userHasRole(DAO_ROLE)
 ```
 
 #### Parameters:
 
 | Name       | Type    | Description                                                                                                  |
-| ---------- | ------- | ------------------------------------------------------------------------------------------------------------ |
-| `_pubkeys` | `bytes` | The number of keys to select. The actual number of selected keys may be less due to the lack of active keys. |
+| ---------- | ------- | ------------- |
+| `_stakeManager` | `address` | New stake manager address |
 
-#### Returns:
 
-| Name          | Type    | Description                                                                                |
-| ------------- | ------- | ------------------------------------------------------------------------------------------ |
-| `_pubkeys`    | `bytes` | Several concatenated validator signing keys                                                |
-| `_signatures` | `bytes` | Several concatenated signatures for (pubkey, withdrawal_credentials, 32000000000) messages |
+### setVersion()
+
+> **Note:** This method can be called by DEFAULT_ADMIN_ROLE-only role.
+
+
+Allows the DAO to set the version of the contract address.
+
+```sol
+function setVersion(string memory _version)
+        external
+        userHasRole(DEFAULT_ADMIN_ROLE)
+```
+
+#### Parameters:
+
+| Name       | Type    | Description                                                                                                  |
+| ---------- | ------- | ------------- |
+| `_version` | `string` | New contract version |

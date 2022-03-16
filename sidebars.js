@@ -1,49 +1,27 @@
 module.exports = {
   docs: [
-    'introduction',
-    'lido-dao',
+    'overview',
+    'administration',
+    'architecture',
+    'how-lido-for-polygon-works',
+    'fees',
     {
       type: 'category',
       label: 'Guides',
       items: [
-        'guides/node-operator-manual',
-        'guides/oracle-operator-manual',
-        'guides/deposit-security-manual',
-        'guides/multisig-deployment',
-        'guides/protocol-levers',
-        'guides/etherscan-voting',
-        'guides/easy-track-guide',
+        'guides/node-operators',
+        'guides/protocol-levers'
       ],
-    },
-    {
-      type: 'category',
-      label: 'Integrations',
-      items: ['integrations/sdk', 'integrations/subgraph'],
-    },
-    {
-      type: 'category',
-      label: 'Token guides',
-      items: ['token-guides/steth-superuser-functions'],
     },
     {
       type: 'category',
       label: 'Contracts',
       items: [
-        'contracts/lido',
-        'contracts/lido-oracle',
-        'contracts/stable-swap-state-oracle',
-        'contracts/steth-price-feed',
+        'contracts/st-matic',
         'contracts/node-operators-registry',
-        'contracts/withdrawals-manager-stub',
-        'contracts/wsteth',
-        'contracts/deposit-security-module',
       ],
     },
-    {
-      type: 'category',
-      label: 'Security',
-      items: ['security/bugbounty'],
-    },
     'deployed-contracts',
+    'faq-node-operators'
   ],
 }
