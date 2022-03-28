@@ -1,12 +1,12 @@
-# How Lido for Polygon works
+# HowLido on Polygon works
 
-From the user perspective, Lido for Polygon user interface will be accessible at https://polygon.lido.fi.
+From the user perspective,Lido on Polygon user interface will be accessible at https://polygon.lido.fi.
 
 ![Lido for Polygon](../static/img/how-lido-for-polygon-works/lido.jpg)
 
 ### Stake Tokens
 ![Lido for Polygon](../static/img/how-lido-for-polygon-works/stake.jpg)
-The first step for users to take when trying stake their MATIC in the Lido for Polygon protocol is to `unlock` their
+The first step for users to take when trying stake their MATIC in theLido on Polygon protocol is to `unlock` their
 tokens. The unlock process approves the StMatic contract to spend the amount to be staked from the user's balance. To unlock
 tokens, click on the `unlock` button and confirm the transaction in the confirmation page that shows up.
 
@@ -26,10 +26,10 @@ would be displayed on the screen.
 
 ![sucess](../static/img/how-lido-for-polygon-works/stake-confirmation.jpg)
 
-The Lido for Polygon protocol receives submitted MATIC tokens, calculates the current ratio between MATIC and stMATIC tokens 
+TheLido on Polygon protocol receives submitted MATIC tokens, calculates the current ratio between MATIC and stMATIC tokens 
 and sends that amount of stMATIC to the user. Since stMATIC is a non-rebasable token, user will always have the same 
 amount. During time, while rewards are accumulated, the value of stMATIC token increases. MATIC tokens are then 
-delegated across Polygon validators that are part of Lido for Polygon protocol.
+delegated across Polygon validators that are part ofLido on Polygon protocol.
 
 Accumulated rewards are redistributed once a day between node operators (5%), Lido DAO (2.5%) and the Treasury (2.5%).
 
@@ -58,7 +58,7 @@ with a success message after the transaction is confirmed. Upon unstaking, user 
 NFT token as a voucher for MATIC token claim after the un-bonding period (approximately 9 days). 
 
 ### Claim Tokens
-After the un-bonding period, a user will be able to submit his NFT to Lido for Polygon, NFT gets burned and user receives his MATIC.
+After the un-bonding period, a user will be able to submit his NFT toLido on Polygon, NFT gets burned and user receives his MATIC.
 To claim your tokens, click on the claim tab on the app and click on the `claim` button. 
 
 ![claim_tokens](../static/img/how-lido-for-polygon-works/claim.jpg)

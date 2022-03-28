@@ -1,7 +1,7 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Lido For Polygon Docs',
-  tagline: 'Documentation Lido For Polygon staking protocol',
+  tagline: 'DocumentationLido on Polygon staking protocol',
   url: 'https://polygon.lido.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',

@@ -4,7 +4,7 @@
 
 ## Superuser privileges, accounts, and roles
 
-StMatic token is an upgradable contract. The Lido for Polygon DAO can change the implementation with the successful DAO vote.
+StMatic token is an upgradable contract. TheLido on Polygon DAO can change the implementation with the successful DAO vote.
 
 StMatic can be stopped by the DAO vote. No operations changing StMatic balances can be performed on the stopped contract:
 1. `approve` and `transfer` calls revert;

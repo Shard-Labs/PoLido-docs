@@ -1,8 +1,8 @@
 # Fees
 
-Validation rewards that Lido for Polygon receives are split into four parts:
+Validation rewards thatLido on Polygon receives are split into four parts:
 
-- 90% of all the rewards gets restaked on the Lido for Polygon validators.
+- 90% of all the rewards gets restaked on theLido on Polygon validators.
 - Remaining 10% gets split into 3 parts:
   - 25% goes to the DAO
   - 50% gets split up across all the operators

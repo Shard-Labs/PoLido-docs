@@ -1,7 +1,7 @@
 # Node Operators
 
-One of the main parts of Lido for Polygon protocol are node operators. Node operators are entities which are running Polygon PoS 
-validators and are registered in the Lido for Polygon node operator registry contract. They are responsible for managing a secure 
+One of the main parts ofLido on Polygon protocol are node operators. Node operators are entities which are running Polygon PoS 
+validators and are registered in theLido on Polygon node operator registry contract. They are responsible for managing a secure 
 and stable infrastructure for running Polygon validator infrastructure for the benefit of the protocol. 
 They are professional staking providers who can ensure the safety of funds belonging to the protocol users and 
 correctness of validator operations.
@@ -12,7 +12,7 @@ correctness of validator operations.
 > - The Mainnet StakingNFT Contract Address Proxy address can be retrieved from [here](https://static.matic.network/network/mainnet/v1/index.json)
 > - The Testnet StakingNFT Contract Address Proxy address can be retrieved from [here](https://static.matic.network/network/testnet/mumbai/index.json)
 
-There are two possible scenarios for new Lido for Polygon node operators:
+There are two possible scenarios for newLido on Polygon node operators:
 
 1. **Existing Polygon validator**
 
@@ -20,13 +20,13 @@ There are two possible scenarios for new Lido for Polygon node operators:
 
 The difference between the two is that existing Polygon validators already have some amount of MATIC tokens staked and 
 probably a significant amount of MATIC tokens delegated. They would not want to unstake, lose their validator slot and 
-restake again after joining the Lido for Polygon. Lido for Polygon offers a `joinOperator` function for this scenario where node operators 
-are going to migrate their Polygon validator ERC721 token to Lido for Polygon protocol. That way, validator does not have any 
+restake again after joining theLido on Polygon.Lido on Polygon offers a `joinOperator` function for this scenario where node operators 
+are going to migrate their Polygon validator ERC721 token toLido on Polygon protocol. That way, validator does not have any 
 downtime, existing delegators still continue to receive their rewards and node operator can manually claim validator 
 rewards at any time.
 
 In the second scenario, we have a fresh validator that does not have any amount of MATIC tokens staked.  
-After being registered in the node operator registry, the node operator will call the `stake` function using Lido for Polygon 
+After being registered in the node operator registry, the node operator will call the `stake` function usingLido on Polygon 
 protocol (as described below) and put the desired amount of tokens to stake (10 MATIC is minimum) + allocate the amount 
 for heimdall fees (minimum 20 MATIC).
 
@@ -39,8 +39,8 @@ You can join as a Node Operator with an unstaked Validator node or with a pre-st
 If you are joining with an unstaked one, all you have to do is provide us with your 64 byte public key used on Heimdall,
 an address which will own the Operator (all the validator rewards will be sent there) and an optional name for the 
 Operator. We will create a new Operator node from the given data, but it still needs to be staked for a Validator share 
-contract to be created. When Lido for Polygon production version launches, you will be required to submit a governance proposal in 
-order to become Lido for Polygon node operator.
+contract to be created. WhenLido on Polygon production version launches, you will be required to submit a governance proposal in 
+order to becomeLido on Polygon node operator.
 
 Validator share contract is important because all the delegators will be delegating their funds to it. You will need to 
 provide 10 Matic for amount to stake and 20 more for Heimdall fee. To create it, you need to approve the total amount of 
@@ -136,7 +136,7 @@ Matic tokens and call the function stake from the address that owns the Operator
 
    After that, click on the `stake` button and confirm the transaction in the MetaMask.
 
-   That's it, voilà! You have officially registered one of the Lido for Polygon Operators!
+   That's it, voilà! You have officially registered one of theLido on Polygon Operators!
 
 ### Pre-staked (existing) Validator
 If you're joining with a pre-staked one, you should interact with `joinOperator` function in NodeOperatorRegistry 
@@ -146,7 +146,7 @@ After the voting process is over, the DAO will create a new operator for you by 
 Next thing to do is to approve your NFT staking token to the newly created Operator. Call `getNodeOperator`
 function by interacting with the NodeOperatorRegistry to retrieve the address of the ValidatorProxy that was created. 
 You will need to approve the NFT token to the retrieved address. After you've approved the token, call the `joinOperator` 
-function. That's it! You are now a part of the Lido for Polygon system!
+function. That's it! You are now a part of theLido on Polygon system!
 
 Guide:
 1. Fetching the address of the validator proxy
@@ -296,7 +296,7 @@ Guide:
 
    Make sure that you are connected with the right address by checking the ACCOUNT field inside the Remix. After you've made sure, click on joinOperator and confirm the transaction.
 
-   You have successfully joined the Lido for Polygon platform!
+   You have successfully joined theLido on Polygon platform!
 
 ## How to exit the protocol as a Node Operator
 
@@ -348,7 +348,7 @@ as a NodeOperator:
 
 2. Exiting the Node Operator Registry by Migrating
    Exiting the Node Operator Registry by Migrating does not unstake a validator or remove a validator from a stake manager. 
-   However, the validator no longer becomes part of the Lido for Polygon protocol after migrating, and the validator
+   However, the validator no longer becomes part of theLido on Polygon protocol after migrating, and the validator
    ownership is transferred to the reward address. 
    1. Call `migrate()` function in the NodeOperator contract.
 

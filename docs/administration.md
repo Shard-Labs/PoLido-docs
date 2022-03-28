@@ -4,7 +4,7 @@ Lido for Polygon is governed by the Lido Decentralized Autonomous Organization (
 
 ## Administrator responsibilities
 
-Lido for Polygon is a program that runs on the Ethereum blockchain. The Program has an upgrade authority: an address that can replace the program with a newer version. This upgrade authority has a lot of power, especially for a program like Lido for Polygon that manages user’s funds. After all, the upgrade authority could deploy a new program that withdraws all staked Matics into an address of their choice. Therefore, it is essential that the upgrade authority is trustworthy.
+Lido for Polygon is a program that runs on the Ethereum blockchain. The Program has an upgrade authority: an address that can replace the program with a newer version. This upgrade authority has a lot of power, especially for a program likeLido on Polygon that manages user’s funds. After all, the upgrade authority could deploy a new program that withdraws all staked Matics into an address of their choice. Therefore, it is essential that the upgrade authority is trustworthy.
 
 ## Multisig administration
 
@@ -17,12 +17,12 @@ A good middle ground between these two extremes is a multi-sig, a program that e
 
 ## Multisig details
 
-For Lido for Polygon, we use the [gnosis-safe](https://gnosis-safe.io/app/), and we require approval from 3 out of 5 members. The members are:
+ForLido on Polygon, we use the [gnosis-safe](https://gnosis-safe.io/app/), and we require approval from 3 out of 5 members. The members are:
 1. **Shard Labs:** `Jakov`
 2. **Lido:** `Vasiliy, Victor`
 3. **Polygon:** `Hamzah, Aishwary`
 
-The addresses of the multi-sig members are listed on the [deployments](https://github.com/Shard-Labs/PoLido/blob/main/mainnet-deployment-info.json#L3) page. The multi-sig instance is used both as the upgrade authority of the program and as the manager of the Lido for Polygon instance.
+The addresses of the multi-sig members are listed on the [deployments](https://github.com/Shard-Labs/PoLido/blob/main/mainnet-deployment-info.json#L3) page. The multi-sig instance is used both as the upgrade authority of the program and as the manager of theLido on Polygon instance.
 
 
 
