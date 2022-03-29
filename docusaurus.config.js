@@ -1,22 +1,22 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Lido For Polygon Docs',
-  tagline: 'Documentation Lido For Polygon staking protocol',
+  title: 'Lido On Polygon Docs',
+  tagline: 'DocumentationLido on Polygon staking protocol',
   url: 'https://polygon.lido.github.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon-32x32.png',
   organizationName: 'Shard-Labs', // Usually your GitHub org/user name.
-  projectName: 'Lido-for-polygon-docs', // Usually your repo name.
+  projectName: 'Lido-on-polygon-docs', // Usually your repo name.
   themeConfig: {
     prism: {
       additionalLanguages: ['solidity'],
     },
     navbar: {
-      title: 'Lido For Polygon Docs',
+      title: 'Lido On Polygon Docs',
       logo: {
-        alt: 'Lido For Polygon Logo',
+        alt: 'Lido On Polygon Logo',
         src: 'img/logo.svg',
       },
       items: [

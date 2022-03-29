@@ -137,7 +137,7 @@ The following transactions revert:
 
 ### Adding a node operator
 
-Add a new Node Operator to the registry and part of the larger Lido for polygon protocol.
+Add a new Node Operator to the registry and part of the largerLido on Polygon protocol.
 - Mutator: `addOperator(string memory _name, uint8 address _rewardAddress, bytes memory _signerPubkey)`
   - Permission required: `DAO_ROLE`
 

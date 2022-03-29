@@ -1,6 +1,6 @@
 # Architecture
 
-The Lido for Polygon architecture has 3 main parts:
+TheLido on Polygon architecture has 3 main parts:
 
 - **StMatic contract**
 - **PoLidoNFT contract**
