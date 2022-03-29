@@ -4,7 +4,7 @@ slug: /
 
 # Overview
 
-Lido for Polygon is a DAO governed liquid staking protocol for Polygon PoS chain. It allows users to stake their ERC20 MATIC tokens on Ethereum mainnet and immediately get the representation of their share in the form of stMATIC token without maintaining staking infrastructure. Users will get staking rewards and still be able to control their stMATIC tokens MATIC tokens will be delegated across validators that are registered and accepted by the DAO insideLido on Polygon protocol.
+Lido on Polygon is a DAO governed liquid staking protocol for Polygon PoS chain. It allows users to stake their ERC20 MATIC tokens on Ethereum mainnet and immediately get the representation of their share in the form of stMATIC token without maintaining staking infrastructure. Users will get staking rewards and still be able to control their stMATIC tokens MATIC tokens will be delegated across validators that are registered and accepted by the DAO insideLido on Polygon protocol.
 
 - Node operators don't have direct access over the delegated assets. 
 - They are just providing infrastructure and getting rewards in return. 

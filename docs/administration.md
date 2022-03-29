@@ -1,10 +1,10 @@
 # Administration
 
-Lido for Polygon is governed by the Lido Decentralized Autonomous Organization (Lido DAO). Members of the DAO — holders of the LDO governance token — can vote on high-level proposals, such as whether to expand to a new chain. For day-to-day tasks, we have a much more narrowly scoped need for somebody to execute privileged operations: an administrator. The administrator rights reside with a 3-out-of-5 multi-sig that consists of established validators and ecosystem partners.
+Lido on Polygon is governed by the Lido Decentralized Autonomous Organization (Lido DAO). Members of the DAO — holders of the LDO governance token — can vote on high-level proposals, such as whether to expand to a new chain. For day-to-day tasks, we have a much more narrowly scoped need for somebody to execute privileged operations: an administrator. The administrator rights reside with a 3-out-of-5 multi-sig that consists of established validators and ecosystem partners.
 
 ## Administrator responsibilities
 
-Lido for Polygon is a program that runs on the Ethereum blockchain. The Program has an upgrade authority: an address that can replace the program with a newer version. This upgrade authority has a lot of power, especially for a program likeLido on Polygon that manages user’s funds. After all, the upgrade authority could deploy a new program that withdraws all staked Matics into an address of their choice. Therefore, it is essential that the upgrade authority is trustworthy.
+Lido on Polygon is a program that runs on the Ethereum blockchain. The Program has an upgrade authority: an address that can replace the program with a newer version. This upgrade authority has a lot of power, especially for a program likeLido on Polygon that manages user’s funds. After all, the upgrade authority could deploy a new program that withdraws all staked Matics into an address of their choice. Therefore, it is essential that the upgrade authority is trustworthy.
 
 ## Multisig administration
 

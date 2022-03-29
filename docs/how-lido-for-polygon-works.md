@@ -2,10 +2,10 @@
 
 From the user perspective,Lido on Polygon user interface will be accessible at https://polygon.lido.fi.
 
-![Lido for Polygon](../static/img/how-lido-for-polygon-works/lido.jpg)
+![Lido on Polygon](../static/img/how-lido-for-polygon-works/lido.jpg)
 
 ### Stake Tokens
-![Lido for Polygon](../static/img/how-lido-for-polygon-works/stake.jpg)
+![Lido on Polygon](../static/img/how-lido-for-polygon-works/stake.jpg)
 The first step for users to take when trying stake their MATIC in theLido on Polygon protocol is to `unlock` their
 tokens. The unlock process approves the StMatic contract to spend the amount to be staked from the user's balance. To unlock
 tokens, click on the `unlock` button and confirm the transaction in the confirmation page that shows up.
