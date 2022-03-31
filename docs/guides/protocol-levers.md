@@ -11,7 +11,7 @@ All existing levers are listed below, grouped by the contract.
 
 The following contracts are upgradeable by the DAO voting:
 
-- [`StMatic`](/contracts/StMatic)
+- [`StMatic`](/contracts/st-matic)
 - [`NodeOperatorsRegistry`](/contracts/node-operators-registry)
 
 Upgradeability is implemented by the Aragon kernel and base contracts. To upgrade an app, one needs
@@ -20,7 +20,7 @@ the `dao.APP_MANAGER_ROLE` permission provided by Aragon. All upgradeable contra
 
 [unstructured storage pattern]: https://blog.openzeppelin.com/upgradeability-using-unstructured-storage
 
-## [StMatic](/contracts/StMatic)
+## [StMatic](/contracts/st-matic)
 
 ### Fees
 

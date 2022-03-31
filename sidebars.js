@@ -21,6 +21,11 @@ module.exports = {
         'contracts/node-operators-registry',
       ],
     },
+    {
+      type: 'category',
+      label: 'Security',
+      items: ['security/bugbounty'],
+    },
     'deployed-contracts',
     'faq-node-operators'
   ],
